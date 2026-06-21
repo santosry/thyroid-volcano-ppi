@@ -4,9 +4,9 @@
 # THCA Transcriptomic Analysis: differential expression (limma),
 # Volcano Plot, and STRING PPI network of DEGs.
 #
-# Only two graphical outputs:
-#   1. Fig1_Volcano_THCA_vs_Normal.{png,pdf,svg}
-#   2. Fig2_PPI_Network_THCA_DEGs.{png,pdf,svg}
+# Only two graphical outputs (PNG 600dpi, Cell Press standard):
+#   1. Fig1_Volcano_THCA_vs_Normal.png
+#   2. Fig2_PPI_Network_THCA_DEGs.png
 #
 # Usage:
 #   Rscript run_pipeline.R
@@ -49,8 +49,8 @@ cat("╔════════════════════════
 cat("║  PIPELINE COMPLETE                               ║\n")
 cat("╚══════════════════════════════════════════════════╝\n\n")
 cat("Outputs:\n")
-cat("  ★ Fig1: Volcano Plot     → results/figures/Fig1_Volcano_THCA_vs_Normal.{png,pdf,svg}\n")
-cat("  ★ Fig2: PPI Network      → results/figures/Fig2_PPI_Network_THCA_DEGs.{png,pdf,svg}\n")
+cat("  ★ Fig1: Volcano Plot     → results/figures/Fig1_Volcano_THCA_vs_Normal.png\n")
+cat("  ★ Fig2: PPI Network      → results/figures/Fig2_PPI_Network_THCA_DEGs.png\n")
 cat("  Tables (7)               → results/tables/\n")
 cat("  Network metadata (4)     → results/network/\n")
 cat("  Session info             → logs/session_info.txt\n")

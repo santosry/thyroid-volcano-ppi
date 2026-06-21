@@ -46,9 +46,9 @@ thyroid-volcano-ppi/
 │   └── download_data.R         # Download Xena Browser expression data
 │
 ├── results/
-│   ├── figures/                # Final publication figures (PNG 600dpi + PDF + SVG)
-│   │   ├── Fig1_Volcano_THCA_vs_Normal.{png,pdf,svg}
-│   │   └── Fig2_PPI_Network_THCA_DEGs.{png,pdf,svg}
+│   ├── figures/                # Final publication figures (PNG 600dpi)
+│   │   ├── Fig1_Volcano_THCA_vs_Normal.png
+│   │   └── Fig2_PPI_Network_THCA_DEGs.png
 │   ├── tables/                 # Documentation tables (TSV)
 │   │   ├── T01_sample_composition.tsv
 │   │   ├── T02_deg_summary.tsv
@@ -105,15 +105,25 @@ BiocManager::install(c(
 
 ### Data download
 
-```bash
-# Option 1: Automatic download
-Rscript scripts/download_data.R
+The expression matrix must be downloaded from **UCSC Xena Browser**:
 
-# Option 2: Manual download from Xena Browser
-# 1. Visit: https://xenabrowser.net/?bookmark=c486b845ee2e750c3a9d2fc5145c8426
-# 2. Click "Download" → "Download current visualization data"
-# 3. Save as: data/raw/XENA_THCA.tsv
+1. Go to: https://xenabrowser.net/?bookmark=c486b845ee2e750c3a9d2fc5145c8426
+2. Click the **Download** button (top-right corner)
+3. Select **"Download current visualization data"**
+4. Save the file as `data/raw/XENA_THCA.tsv` in the project directory
+
+**Alternatively**, use the included download script:
+
+```bash
+Rscript scripts/download_data.R
 ```
+
+**Data description**:
+- Source: TCGA THCA (Thyroid Carcinoma) + GTEx normal thyroid tissue
+- Pipeline: TOIL RNA-seq recompute
+- Values: log₂(norm_count + 1)
+- Samples: 783 (279 Normal + 504 THCA)
+- Genes: 121 thyroid hormone signaling pathway genes (KEGG hsa04919)
 
 ---
 
@@ -137,8 +147,8 @@ source("run_pipeline.R")
 
 ```
 ═══ PIPELINE COMPLETE ═══
-  ★ Fig1: Volcano Plot     → results/figures/Fig1_Volcano_THCA_vs_Normal.{png,pdf,svg}
-  ★ Fig2: PPI Network      → results/figures/Fig2_PPI_Network_THCA_DEGs.{png,pdf,svg}
+  ★ Fig1: Volcano Plot     → results/figures/Fig1_Volcano_THCA_vs_Normal.png
+  ★ Fig2: PPI Network      → results/figures/Fig2_PPI_Network_THCA_DEGs.png
   Tables (7)               → results/tables/
   Network metadata (4)     → results/network/
 ```
