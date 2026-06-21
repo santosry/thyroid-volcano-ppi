@@ -13,9 +13,10 @@
 logs/*.log
 logs/session_info.txt
 
-# ── STRING cache (large files, auto-downloaded) ──────────────────────────────
-data/string_cache/*.gz
-data/string_cache/*.txt
+# ── renv (library regenerada via renv::restore()) ─────────────────────────
+renv/library/
+renv/staging/
+renv/sandbox/
 
 # ── OS ───────────────────────────────────────────────────────────────────────
 .DS_Store

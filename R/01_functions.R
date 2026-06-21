@@ -2,8 +2,8 @@
 # R/01_functions.R — Core utility functions
 # thyroid-volcano-ppi
 #
-# AUDIT: ✓ dplyr::select qualified  ✓ igraph:: namespace on all graph ops
-#        ✓ String API error handling  ✓ KEGG artifact filter
+# AUDIT: ✓ dplyr::select qualified  ✓ igraph:: namespace  ✓ hits_scores()
+#        ✓ STRING API error handling  ✓ KEGG artifact filter
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ── F1. Extract gene symbols from KEGG pathway ────────────────────────────────
@@ -12,7 +12,7 @@ fetch_kegg_genes <- function(pathway_id) {
   stopifnot(length(pw) == 1L)
   g <- pw[[1]]$GENE
   if (is.null(g) || length(g) == 0L) stop("Empty GENE field for ", pathway_id)
-  
+
   genes <- g[seq(2, length(g), by = 2)] |>
     str_remove("\\s*\\[.*$") |>
     str_trim() |>
@@ -20,7 +20,7 @@ fetch_kegg_genes <- function(pathway_id) {
     str_trim() |>
     unique() |>
     sort()
-  
+
   # Remove KEGG readthrough-fusion artifacts (e.g., P3R3URF-PIK3R3)
   genes <- genes[!grepl("-", genes) | nchar(genes) <= 10]
   tibble(pathway_id = pathway_id, gene_symbol = genes)
@@ -96,7 +96,8 @@ fetch_string_edges <- function(string_ids, taxon = 9606) {
   )
 
   if (nrow(raw) == 0L) {
-    return(tibble(from = character(), to = character(), combined_score = numeric()))
+    return(tibble(from = character(), to = character(),
+                  combined_score = numeric()))
   }
   if (!all(c("stringId_A", "stringId_B") %in% colnames(raw))) {
     stop("STRING REST response missing expected columns.")
@@ -131,7 +132,7 @@ compute_centrality <- function(g) {
     degree      = igraph::degree(g),
     betweenness = igraph::betweenness(g, normalized = TRUE),
     closeness   = igraph::closeness(g, normalized = TRUE),
-    hub_score   = igraph::hub_score(g)$vector
+    hub_score   = igraph::hits_scores(g)$hub
   ) |> dplyr::arrange(dplyr::desc(betweenness))
 }
 
@@ -139,16 +140,17 @@ compute_centrality <- function(g) {
 evaluate_layout <- function(g, layout_fun, dim = 2, ...) {
   set.seed(42)
   lay <- tryCatch(layout_fun(g, dim = dim, ...), error = function(e) NULL)
-  if (is.null(lay) || any(is.na(lay)) || nrow(lay) != igraph::vcount(g)) return(0)
-  
+  if (is.null(lay) || any(is.na(lay)) || nrow(lay) != igraph::vcount(g))
+    return(0)
+
   d <- as.matrix(dist(lay))
   diag(d) <- Inf
   min_dist <- apply(d, 1, min)
-  
+
   adj <- igraph::as_adjacency_matrix(g)
   edge_dists <- d[which(adj > 0, arr.ind = TRUE)]
   mean_edge <- if (length(edge_dists) > 0) mean(edge_dists, na.rm = TRUE) else 1
-  
+
   score <- median(min_dist / mean_edge, na.rm = TRUE)
   if (!is.finite(score)) score <- 0
   score

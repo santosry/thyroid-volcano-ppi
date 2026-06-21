@@ -9,9 +9,16 @@ cat("\n── M1: Data Import & QC ──\n")
 
 INPUT <- here::here("data", "raw", "XENA_THCA.tsv")
 if (!file.exists(INPUT)) {
-  stop("Missing: ", INPUT,
-       "\nDownload from Xena Browser (bookmark: c486b845ee2e750c3a9d2fc5145c8426)",
-       "\nor run: Rscript scripts/download_data.R")
+  stop(
+    "\n❌ Data file not found: ", INPUT, "\n\n",
+    "   ⚠ The file 'data/raw/XENA_THCA.tsv' is required to run the pipeline.\n\n",
+    "   How to obtain:\n",
+    "   1. Rscript scripts/download_data.R   (automatic download)\n",
+    "   2. Or download manually from Xena Browser:\n",
+    "      bit.ly/thyroid-volcano-ppi-data\n",
+    "      Bookmark: c486b845ee2e750c3a9d2fc5145c8426\n\n",
+    "   See README.md for full instructions.\n"
+  )
 }
 
 raw <- readr::read_tsv(INPUT, show_col_types = FALSE, name_repair = "minimal")
@@ -22,9 +29,11 @@ names(raw) <- sub("^_", "", names(raw))
 if ("samples" %in% names(raw)) raw$samples <- NULL
 
 # ── Validate metadata columns ─────────────────────────────────────────────────
-META_COLS <- c("sample", "primary_site", "sample_type", "study", "TCGA_GTEX_main_category")
+META_COLS <- c("sample", "primary_site", "sample_type",
+               "study", "TCGA_GTEX_main_category")
 missing_meta <- setdiff(META_COLS, names(raw))
-if (length(missing_meta) > 0) stop("Missing columns: ", paste(missing_meta, collapse = ", "))
+if (length(missing_meta) > 0)
+  stop("Missing columns: ", paste(missing_meta, collapse = ", "))
 
 # ── Check for duplicate sample IDs ────────────────────────────────────────────
 if (anyDuplicated(raw$sample)) {
@@ -36,7 +45,6 @@ if (anyDuplicated(raw$sample)) {
 meta <- raw[, META_COLS, drop = FALSE]
 expr <- as.matrix(raw[, setdiff(names(raw), META_COLS), drop = FALSE])
 
-# Guard against non-numeric coercion
 if (!all(apply(expr, 2, is.numeric))) {
   stop("Non-numeric columns found in expression matrix.")
 }
@@ -55,10 +63,11 @@ expr <- expr[keep, , drop = FALSE]
 
 # ── NA proportion check ───────────────────────────────────────────────────────
 na_frac <- mean(is.na(expr))
-if (na_frac > 0.05) warning(sprintf("%.1f%% missing values in expression data", na_frac * 100))
+if (na_frac > 0.05)
+  warning(sprintf("%.1f%% missing values in expression data", na_frac * 100))
 cat(sprintf("  Missing values: %.2f%%\n", na_frac * 100))
 
-# ── QC ────────────────────────────────────────────────────────────────────────
+# ── Expression scale QC ───────────────────────────────────────────────────────
 validate_expression_scale(expr)
 
 cat("\n  Samples:\n")

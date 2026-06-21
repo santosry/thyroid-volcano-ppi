@@ -1,13 +1,13 @@
 # ═══════════════════════════════════════════════════════════════════════════════
-# R/00_setup.R — Project setup, parameters, packages
-# thyroid-volcano-ppi — THCA DEG analysis with Volcano Plot and PPI Network
+# R/00_setup.R — Project setup, parameters, and packages
+# thyroid-volcano-ppi — THCA DEG + PPI analysis
 #
-# AUDIT: ✓ Portable paths (here::here)  ✓ No hardcoded paths  ✓ seed=42
-#        ✓ Bioconductor handled  ✓ All params centralized
+# AUDIT: ✓ here::here()  ✓ seed=42  ✓ Bioconductor  ✓ Centralized parameters
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if (!exists("PROJECT_ROOT")) {
-  if (!requireNamespace("here", quietly = TRUE)) install.packages("here", repos = "https://cloud.r-project.org")
+  if (!requireNamespace("here", quietly = TRUE))
+    install.packages("here", repos = "https://cloud.r-project.org")
   library(here)
   PROJECT_ROOT <- here::here()
 }
@@ -21,13 +21,12 @@ DIRS <- list(
 invisible(lapply(DIRS, dir.create, recursive = TRUE, showWarnings = FALSE))
 
 # ── Analysis Parameters ───────────────────────────────────────────────────────
-# Each threshold is statistically and biologically justified.
 THRESHOLD <- list(
-  lfc        = 1.0,     # |log2FC|>1 → 2-fold, standard biological significance
-  fdr        = 0.05,    # BH-adjusted, 5% false discovery rate
-  string     = 700,     # STRING combined_score≥700 → high confidence
+  lfc        = 1.0,     # |log2FC| > 1 → 2-fold biological significance
+  fdr        = 0.05,    # Benjamini-Hochberg, 5% false discovery rate
+  string     = 700,     # STRING combined_score ≥ 700 → high confidence
   expr_min   = 0.5,     # log2(norm_count+1) detection floor
-  expr_frac  = 0.1      # expressed in ≥10% samples
+  expr_frac  = 0.1      # expressed in ≥ 10% of samples
 )
 
 KEGG_ID       <- "hsa04919"   # Thyroid hormone signaling pathway
@@ -47,13 +46,13 @@ REQUIRED_PKGS <- c(
   "httr", "jsonlite"
 )
 
-# Bioconductor packages (not on CRAN)
 BIOC_PKGS <- c("limma", "KEGGREST", "org.Hs.eg.db", "AnnotationDbi")
 
 for (pkg in REQUIRED_PKGS) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     if (pkg %in% BIOC_PKGS) {
-      if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+      if (!requireNamespace("BiocManager", quietly = TRUE))
+        install.packages("BiocManager")
       BiocManager::install(pkg, update = FALSE, ask = FALSE)
     } else {
       install.packages(pkg, repos = "https://cloud.r-project.org")
@@ -70,27 +69,30 @@ suppressPackageStartupMessages({
   library(httr); library(jsonlite)
 })
 
-# ── Cell Press Color Palette ──────────────────────────────────────────────────
-# Dark, sober, colorblind-safe, consistent across all figures
+# ── Publication Color Palette (Nature Communications / Cell Press) ────────────
 CELL_COLORS <- list(
-  up        = "#A11D21",   # Deep carmine — upregulated in THCA
-  down      = "#1A5B82",   # Dark steel blue — downregulated in THCA
-  ns        = "#D4D4D4",   # Light grey — not significant
+  up        = "#4477AA",   # Refined blue — upregulated in THCA
+  down      = "#AA4488",   # Soft magenta — downregulated in THCA
+  ns        = "#CCCCCC",   # Light grey — not significant
   edge      = "#D8D8D8",   # Very light grey — PPI edges
-  highlight = "#1A1A1A",   # Near-black — borders
-  line      = "#4D4D4D"    # Threshold lines
+  highlight = "#1A1A1A",   # Near-black — hub borders
+  line      = "#4D4D4D",   # Threshold / axis lines
+  bg        = "#FFFFFF",   # White background — journal standard
+  grid      = "#E8E8E8",   # Grid lines (nearly invisible)
+  outline   = "#333333"    # Point outlines
 )
 
-# ── Cell Press Typography ─────────────────────────────────────────────────────
-# All figures: 8pt sans-serif, consistent across volcano and PPI
-FONT_SIZE <- 8
+# ── Publication Typography ────────────────────────────────────────────────────
+FONT_SIZE <- 14
 FONT_FAM  <- "sans"   # Arial/Helvetica on all platforms
 
 # ── Logging ───────────────────────────────────────────────────────────────────
-log_file <- file.path(DIRS$logs, paste0("pipeline_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".log"))
+log_file <- file.path(DIRS$logs, paste0("pipeline_",
+                      format(Sys.time(), "%Y%m%d_%H%M%S"), ".log"))
 log_con  <- file(log_file, open = "wt")
 sink(log_con, split = TRUE)
-msg_file <- file.path(DIRS$logs, paste0("msgs_", format(Sys.time(), "%Y%m%d_%H%M%S"), ".log"))
+msg_file <- file.path(DIRS$logs, paste0("msgs_",
+                      format(Sys.time(), "%Y%m%d_%H%M%S"), ".log"))
 msg_con  <- file(msg_file, open = "wt")
 sink(msg_con, type = "message")
 

@@ -4,7 +4,7 @@ Expression filter retained	119
 Upregulated (THCA)	9
 Downregulated (THCA)	20
 Total DEGs	29
-log2FC threshold	1
+|log2FC| threshold	1
 FDR threshold (BH)	0.05
 Expression filter min	0.5
 Expression filter fraction	10%

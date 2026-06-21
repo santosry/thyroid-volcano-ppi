@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "thyroid-volcano-ppi: Differential Expression and PPI Network Analysis in Thyroid Carcinoma (THCA)"
+type: software
+authors:
+  - given-names: "Ryan de Paulo"
+    family-names: Santos
+    orcid: "https://orcid.org/0009-0005-6770-2001"
+    affiliation: 1
+  - given-names: "Letícia Maria Dias"
+    family-names: Freitas
+    orcid: "https://orcid.org/0009-0009-9930-9588"
+    affiliation: 2
+  - given-names: "Thaís Faria Coutinho da Silva"
+    family-names: Pereira
+    orcid: "https://orcid.org/0009-0005-7091-2480"
+    affiliation: 3
+repository-code: "https://github.com/santosry/thyroid-volcano-ppi"
+keywords:
+  - "thyroid carcinoma"
+  - "THCA"
+  - "differential expression"
+  - "volcano plot"
+  - "protein-protein interaction"
+  - "STRING"
+  - "KEGG"
+  - "limma"
+  - "bioinformatics"
+  - "reproducible research"
+license: MIT
+version: "1.0.0"
+date-released: "2026-06-21"

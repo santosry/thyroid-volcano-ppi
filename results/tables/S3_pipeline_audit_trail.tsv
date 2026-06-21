@@ -1,0 +1,7 @@
+etapa	script	entrada	saida	dependencias	validacao
+Setup	00_setup.R	—	Parâmetros, diretórios, pacotes	here, BiocManager	sessionInfo()
+Importação e QC	02_import.R	XENA_THCA.tsv	Matriz de expressão + metadados	readr, dplyr	Escala log2, NAs
+DEG (limma)	03_deg.R	Matriz de expressão	Resultados DEG (119 genes)	limma	eBayes, BH, thresholds
+Volcano Plot	04_volcano.R	Resultados DEG	Fig1_Volcano_THCA_vs_Normal.png	ggplot2, ggrepel	seed=42, parâmetros
+Rede PPI	05_ppi.R	Lista de DEGs	Fig2_PPI_Network_THCA_DEGs.png	igraph, ggraph, httr	STRING≥700, walktrap
+Suplementares	06_supplementary.R	sessionInfo() + resultados	S1–S4 (TSV)	dplyr, readr	Conferência manual

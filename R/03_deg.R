@@ -2,7 +2,7 @@
 # R/03_deg.R — Differential expression analysis (limma)
 # thyroid-volcano-ppi
 #
-# AUDIT: ✓ Variable naming fixed  ✓ P-value formatting  ✓ dplyr:: qualified
+# AUDIT: ✓ Variable naming  ✓ P-value formatting  ✓ dplyr:: qualified
 # ═══════════════════════════════════════════════════════════════════════════════
 
 cat("\n── M2: Differential Expression (limma) ──\n")
@@ -23,10 +23,10 @@ colnames(design) <- levels(meta$condition)
 stopifnot(ncol(E) == nrow(design))
 
 # ── Fit + contrast + empirical Bayes ──────────────────────────────────────────
-fit       <- lmFit(E, design)
-contrast  <- makeContrasts(THCA_vs_Normal = THCA - Normal, levels = design)
-fit2      <- contrasts.fit(fit, contrast)
-fit2      <- eBayes(fit2)
+fit      <- lmFit(E, design)
+contrast <- makeContrasts(THCA_vs_Normal = THCA - Normal, levels = design)
+fit2     <- contrasts.fit(fit, contrast)
+fit2     <- eBayes(fit2)
 
 # ── Results table ─────────────────────────────────────────────────────────────
 deg <- topTable(fit2, coef = "THCA_vs_Normal", number = Inf,
@@ -40,7 +40,7 @@ deg$regulation <- with(deg, ifelse(
   ifelse(adj.P.Val < THRESHOLD$fdr & logFC < -THRESHOLD$lfc, "Down", "NS")
 ))
 
-cat("\n  DEGs (|log2FC|>", THRESHOLD$lfc, ", FDR<", THRESHOLD$fdr, "):\n", sep = "")
+cat("\n  DEGs (|log2FC| >", THRESHOLD$lfc, ", FDR <", THRESHOLD$fdr, "):\n", sep = "")
 print(table(deg$regulation))
 
 n_up   <- sum(deg$regulation == "Up")
@@ -81,7 +81,7 @@ deg_summary <- tibble(
   parameter = c(
     "Total genes tested", "Expression filter retained",
     "Upregulated (THCA)", "Downregulated (THCA)", "Total DEGs",
-    "log2FC threshold", "FDR threshold (BH)", "Expression filter min",
+    "|log2FC| threshold", "FDR threshold (BH)", "Expression filter min",
     "Expression filter fraction", "KEGG pathway",
     "KEGG genes in data", "KEGG DEGs", "KEGG Up", "KEGG Down"
   ),
