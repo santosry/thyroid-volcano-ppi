@@ -50,6 +50,20 @@ s1 <- pkg_info |>
 write_sup(s1, "S1_computational_environment.tsv")
 cat("  S1: Computational environment —", nrow(s1), "packages\n")
 
+# Also write R version and platform info
+si <- sessionInfo()
+s1_env <- tibble::tibble(
+  property = c("R version", "Platform", "OS", "System"),
+  value = c(
+    paste0(si$R.version$major, ".", si$R.version$minor),
+    si$platform,
+    si$running,
+    Sys.info()[["sysname"]]
+  )
+)
+write_sup(s1_env, "S1b_system_info.tsv")
+cat("  S1b: System info written\n")
+
 # ── S2: External Databases ────────────────────────────────────────────────────
 org_ver <- inst$version[inst$package == "org.Hs.eg.db"]
 if (length(org_ver) == 0) org_ver <- "N/A"

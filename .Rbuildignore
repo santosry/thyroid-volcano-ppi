@@ -1,0 +1,16 @@
+^renv$
+^renv\.lock$
+^data$
+^results$
+^logs$
+^docs$
+^scripts$
+^tests$
+^\.Rprofile$
+^Dockerfile$
+^CITATION\.cff$
+^volcano_referencia\.png$
+^README\.md$
+^LICENSE$
+^\.gitignore$
+^\.git$

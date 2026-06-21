@@ -1,6 +1,6 @@
-base	identificador	versao	data_acesso	descricao
-KEGG PATHWAY	hsa04919	112.0	2026-06-21	Via de sinalização do hormônio tireoidiano
-STRING	Homo sapiens (9606)	12.0	2026-06-21	Rede PPI — alta confiança (score ≥700)
-TCGA + GTEx (Xena)	c486b845ee2e750c3a9d2fc5145c8426	TOIL RSEM	2026-06-21	Expressão gênica log2(norm+1), 783 amostras
-org.Hs.eg.db	Homo sapiens	3.23.1	2026-06-21	Anotações gênicas Entrez/Symbol
-AnnotationDbi	—	1.74.0	2026-06-21	Interface de anotação Bioconductor
+database	identifier	version	access_date	description
+KEGG PATHWAY	hsa04919	112.0	2026-06-21	Thyroid hormone signaling pathway
+STRING	Homo sapiens (9606)	12.0	2026-06-21	PPI network — high confidence (score ≥700)
+TCGA + GTEx (Xena)	c486b845ee2e750c3a9d2fc5145c8426	TOIL RSEM	2026-06-21	Gene expression log2(norm+1), 783 samples
+org.Hs.eg.db	Homo sapiens	3.23.1	2026-06-21	Entrez/Symbol gene annotations
+AnnotationDbi	—	1.74.0	2026-06-21	Bioconductor annotation interface

@@ -15,9 +15,11 @@ Transcriptomic analysis of THCA using TCGA & GTEx data, focused on the thyroid h
 
 | Author | ORCID | Affiliation |
 |--------|-------|-------------|
-| **Ryan de Paulo Santos** | [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001) | 1 |
-| **Letícia Maria Dias Freitas** | [0009-0009-9930-9588](https://orcid.org/0009-0009-9930-9588) | 2 |
-| **Thaís Faria Coutinho da Silva Pereira** | [0009-0005-7091-2480](https://orcid.org/0009-0005-7091-2480) | 3 |
+| **Ryan de Paulo Santos** ✉ | [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001) | Instituto Federal de Educação, Ciência e Tecnologia Fluminense (IFFluminense) — Campus Campos Guarus, Campos dos Goytacazes, RJ, Brazil |
+| **Letícia Maria Dias Freitas** | [0009-0009-9930-9588](https://orcid.org/0009-0009-9930-9588) | Escola Técnica Estadual João Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ, Brazil |
+| **Thaís Faria Coutinho da Silva Pereira** | [0009-0005-7091-2480](https://orcid.org/0009-0005-7091-2480) | Escola Técnica Estadual João Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ, Brazil |
+
+✉ **Corresponding author:** Ryan de Paulo Santos — [ryan.paulo@gsuite.iff.edu.br](mailto:ryan.paulo@gsuite.iff.edu.br)
 
 ---
 
@@ -70,6 +72,8 @@ Rscript scripts/download_data.R
 | Samples | 783 (279 Normal + 504 THCA) |
 | Genes | 121 (KEGG hsa04919 pathway) |
 | Bookmark | `c486b845ee2e750c3a9d2fc5145c8426` |
+| MD5 | `3e0ccba1c66ac9729b74e1537b791383` |
+| SHA-256 | `f4eaa160126ef3a2b586c8274b7c5e498c3c3a720ea0812df85177de1bc026b0` |
 | Citation | Goldman et al. (2020) *Nature Biotechnology* 38:675–678 |
 
 ---
@@ -228,6 +232,7 @@ Rscript run_pipeline.R
 | Table | Content |
 |-------|---------|
 | `S1_computational_environment.tsv` | Computational environment (R, packages, versions) |
+| `S1b_system_info.tsv` | R version, platform, and operating system details |
 | `S2_external_databases.tsv` | External databases used |
 | `S3_pipeline_audit_trail.tsv` | Complete pipeline audit trail |
 | `S4_ai_assisted_tasks.tsv` | AI-assisted tasks and human validation |
@@ -249,6 +254,12 @@ Both figures follow **Nature Communications / Cell Press** editorial guidelines:
 | Labels | ggrepel with leader lines, most relevant genes only |
 | PPI Network | Fruchterman-Reingold layout, walktrap communities |
 
+### Figure Legends
+
+**Figure 1. Volcano plot of differentially expressed genes (DEGs) in thyroid carcinoma (THCA) versus normal thyroid tissue.** Each point represents one gene from the KEGG thyroid hormone signaling pathway (hsa04919). The x-axis shows log₂ fold change (THCA / Normal); the y-axis shows −log₁₀(adjusted *P*-value, Benjamini-Hochberg). Dashed lines indicate thresholds: \|log₂FC\| = 1.0 (2-fold change) and FDR = 0.05. Blue points: significantly upregulated in THCA (*n* = 9). Magenta points: significantly downregulated (*n* = 20). Grey points: not significant (*n* = 90). Open circles highlight pathway-annotated KEGG genes. Gene symbols are shown for the most statistically and biologically significant DEGs using ggrepel with leader lines.
+
+**Figure 2. Protein-protein interaction (PPI) network of THCA DEGs.** Network constructed from STRING v12.0 high-confidence interactions (combined score ≥ 700). Nodes represent DEG-encoded proteins, colored by walktrap-detected functional community. Node size is proportional to degree centrality. Hub genes (based on betweenness centrality ≥ 70th percentile or degree ≥ 3, *n* = 5) are highlighted with thick dark borders. Edge thickness is proportional to STRING combined score. Intra-community edges (*n* = 11) are shown in grey; the single inter-community edge in lighter tone. Gene labels are shown for hub and pathway-annotated nodes using ggrepel.
+
 ---
 
 ## Reproducibility
@@ -260,7 +271,13 @@ Both figures follow **Nature Communications / Cell Press** editorial guidelines:
 - **`renv.lock`** — exact versions of all R packages
 - **`Dockerfile`** — full reproducible Linux environment
 - **`CITATION.cff`** — standardized citation metadata
+- **`results/CHECKSUMS.md`** — MD5 hashes of all output files for verification
 - Fully modular pipeline — each `R/` script can run independently
+
+To verify output integrity after running the pipeline:
+```bash
+cd results && md5sum -c CHECKSUMS.md
+```
 
 ---
 

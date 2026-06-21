@@ -6,15 +6,16 @@ authors:
   - given-names: "Ryan de Paulo"
     family-names: Santos
     orcid: "https://orcid.org/0009-0005-6770-2001"
-    affiliation: 1
+    email: "ryan.paulo@gsuite.iff.edu.br"
+    affiliation: "Instituto Federal de Educação, Ciência e Tecnologia Fluminense (IFFluminense) — Campus Campos Guarus, Campos dos Goytacazes, RJ, Brazil"
   - given-names: "Letícia Maria Dias"
     family-names: Freitas
     orcid: "https://orcid.org/0009-0009-9930-9588"
-    affiliation: 2
+    affiliation: "Escola Técnica Estadual João Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ, Brazil"
   - given-names: "Thaís Faria Coutinho da Silva"
     family-names: Pereira
     orcid: "https://orcid.org/0009-0005-7091-2480"
-    affiliation: 3
+    affiliation: "Escola Técnica Estadual João Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ, Brazil"
 repository-code: "https://github.com/santosry/thyroid-volcano-ppi"
 keywords:
   - "thyroid carcinoma"
