@@ -278,7 +278,7 @@ Depois é só rodar o script novamente.
 |--------|-------------|
 | **Letícia Maria Dias Freitas** | Conceituação (Liderança); Metodologia (Igual); Software (Igual); Análise Formal (Igual); Curadoria de Dados (Igual); Validação (Igual); Visualização (Igual); Investigação (Igual); Escrita – Rascunho Original (Liderança); Administração do Projeto (Suporte) |
 | **Ryan de Paulo Santos** | Conceituação (Suporte); Metodologia (Igual); Software (Igual); Análise Formal (Igual); Curadoria de Dados (Igual); Validação (Igual); Visualização (Igual); Investigação (Igual); Escrita – Rascunho Original (Igual); Administração do Projeto (Liderança); Escrita – Revisão e Edição (Suporte) |
-| **Thaís Faria Coutinho da Silva Pereira** | Validação (Suporte); Escrita – Revisão e Edição (Liderança); Supervisão (Suporte); Expertise de Domínio e Interpretação Biológica (Liderança); Validação Biológica (Liderança); Revisão Científica (Liderança) |
+| **Thaís Faria Coutinho da Silva Pereira** | Supervisão (Liderança); Revisão Científica (Liderança) |
 
 ---
 
