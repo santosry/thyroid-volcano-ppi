@@ -1,6 +1,6 @@
 # thyroid-volcano-ppi
 
-**Analise de Expressao Diferencial e Rede de Interacao Proteina-Proteina no Carcinoma de Tireoide (THCA)**
+**Differential Expression and Protein-Protein Interaction Network Analysis in Thyroid Carcinoma (THCA)**
 
 [![R >= 4.1](https://img.shields.io/badge/R-%E2%89%A5%204.1-blue)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
@@ -9,460 +9,460 @@
 
 ---
 
-> **Este README foi escrito para profissionais da saude.**
-> Se voce nunca usou R ou GitHub na vida, nao se preocupe: cada passo esta explicado abaixo.
+> This README is written for healthcare professionals.
+> If you have never used R or GitHub, each step is explained below.
 
 ---
 
-## Sumario
+## Contents
 
-- [Para Profissionais da Saude](#para-profissionais-da-saude) : Guia completo passo a passo
-- [Desenho do Estudo](#desenho-do-estudo) : Metodos, fontes de dados e parametros
-- [Limitacoes](#limitacoes) : O que esta analise NAO prova
-- [Estrutura do Pipeline](#estrutura-do-pipeline) : Organizacao dos scripts
-- [Como Executar](#como-executar) : Comandos para rodar
-- [Outputs e Interpretacao](#outputs-e-interpretacao) : Figuras e tabelas geradas
-- [Referencias](#referencias) : Citacoes completas
+- [For Healthcare Professionals](#for-healthcare-professionals) : Complete step-by-step guide
+- [Study Design](#study-design) : Methods, data sources, and analysis parameters
+- [Limitations](#limitations) : What this analysis does NOT prove
+- [Pipeline Structure](#pipeline-structure) : Script organization
+- [How to Run](#how-to-run) : Commands to execute
+- [Outputs and Interpretation](#outputs-and-interpretation) : Generated figures and tables
+- [References](#references) : Full citations
 
 ---
 
-## Para Profissionais da Saude
+## For Healthcare Professionals
 
-### O que este projeto faz?
+### What this project does
 
-Este projeto compara **quais genes estao com a atividade alterada** em tumores de tireoide (carcinoma papilifero, THCA) em relacao ao tecido normal da tireoide.
+This project compares gene activity changes in thyroid tumors (papillary thyroid carcinoma, THCA) against normal thyroid tissue.
 
-Usamos dados publicos do **TCGA** (The Cancer Genome Atlas) e do **GTEx** (Genotype-Tissue Expression), totalizando **783 amostras**: 504 de tumor e 279 de tecido normal.
+We use public data from **TCGA** (The Cancer Genome Atlas) and **GTEx** (Genotype-Tissue Expression), totaling **783 samples**: 504 tumor and 279 normal.
 
-O foco e na **via de sinalizacao do hormonio tireoidiano** (KEGG hsa04919), com 121 genes analisados.
+The focus is the **thyroid hormone signaling pathway** (KEGG hsa04919), with 121 genes analyzed.
 
-### Os dois resultados principais
+### Main results
 
-| Figura | O que mostra |
+| Figure | What it shows |
 |--------|-------------|
-| **Figura 1: Volcano Plot** | Quais genes estao **superexpressos** (mais ativos) ou **subexpressos** (menos ativos) no tumor, e com que nivel de significancia estatistica |
-| **Figura 2: Rede PPI** | Como as **proteinas** desses genes interagem entre si, formando uma rede de contatos, e quais proteinas sao os "hubs" (pontos centrais da rede) |
+| **Figure 1: Volcano Plot** | Which genes are **upregulated** (more active) or **downregulated** (less active) in the tumor, and their statistical significance |
+| **Figure 2: PPI Network** | How the **proteins** encoded by these genes interact, forming a contact network, and which proteins are the network "hubs" (central nodes) |
 
-### ATENCAO: O que esta analise NAO faz
+### What this analysis does NOT do
 
-- **NAO** estabelece causalidade (associacao nao e causa)
-- **NAO** identifica alvos terapeuticos validados
-- **NAO** substitui validacao experimental (PCR, Western blot, etc.)
-- **NAO** corrige efeitos de batch entre TCGA e GTEx
-- Os **hubs** da rede PPI sao metricas de centralidade exploratorias; **nao implicam importancia biologica comprovada ou druggability**
+- Does **NOT** establish causality (association is not causation)
+- Does **NOT** identify validated therapeutic targets
+- Does **NOT** replace experimental validation (PCR, Western blot, etc.)
+- Does **NOT** correct for batch effects between TCGA and GTEx
+- PPI network **hubs** are exploratory centrality metrics; they **do not** imply proven biological importance or druggability
 
-### O que voce precisa ter instalado?
+### What you need to install
 
-#### 1. Instale o R
+#### 1. Install R
 
-O R e um programa gratuito de analise estatistica.
+R is a free statistical analysis program.
 
-- Acesse: **https://cran.r-project.org/**
-- Clique em **"Download R for Windows"** (ou macOS, conforme seu sistema)
-- Clique em **"base"** e depois em **"Download R-X.X.X for Windows"**
-- Execute o instalador e siga os passos: **Avancar, Avancar, Concluir**
+- Go to: **https://cran.r-project.org/**
+- Click **"Download R for Windows"** (or macOS, depending on your system)
+- Click **"base"** and then **"Download R-X.X.X for Windows"**
+- Run the installer and follow the steps: **Next, Next, Finish**
 
-#### 2. Instale o VS Code (recomendado) ou RStudio
+#### 2. Install VS Code (recommended) or RStudio
 
-O R pode ser usado com duas interfaces principais. O **VS Code** e a melhor opcao por ser mais moderno e versatil. O **RStudio** tambem funciona.
+R can be used with two main interfaces. **VS Code** is the best option as it is more modern and versatile. **RStudio** also works.
 
 **VS Code:**
-- Acesse: **https://code.visualstudio.com/**
-- Baixe e instale normalmente
-- Depois, instale a extensao **R** (busque por "R" na aba de extensoes, atalho `Ctrl+Shift+X`)
-- Instale tambem a extensao **R Debugger**
+- Go to: **https://code.visualstudio.com/**
+- Download and install normally
+- Then install the **R** extension (search for "R" in the extensions tab, shortcut `Ctrl+Shift+X`)
+- Also install the **R Debugger** extension
 
 **RStudio:**
-- Acesse: **https://posit.co/download/rstudio-desktop/**
-- Baixe a versao gratuita (RStudio Desktop, Open Source Edition)
-- Instale normalmente
+- Go to: **https://posit.co/download/rstudio-desktop/**
+- Download the free version (RStudio Desktop, Open Source Edition)
+- Install normally
 
-### Passo a passo para rodar o script
+### Step-by-step to run the script
 
-#### Antes de começar: baixe o repositorio
+#### Before starting: download the repository
 
-Voce pode baixar o projeto inteiro de duas formas:
+You can download the entire project in two ways:
 
-**Opcao A: Se voce NAO tem Git instalado (a mais facil):**
-1. No topo desta pagina do GitHub, clique no botao verde **"<> Code"**
-2. Clique em **"Download ZIP"**
-3. Extraia o arquivo `.zip` para uma pasta no seu computador (ex: `C:\Users\SeuNome\Downloads\thyroid-volcano-ppi`)
-4. Essa pasta extraida sera seu **diretorio de trabalho**
+**Option A: If you do NOT have Git installed (easiest):**
+1. At the top of this GitHub page, click the green **"<> Code"** button
+2. Click **"Download ZIP"**
+3. Extract the `.zip` file to a folder on your computer (e.g., `C:\Users\YourName\Downloads\thyroid-volcano-ppi`)
+4. This extracted folder will be your **working directory**
 
-**Opcao B: Se voce tem Git instalado:**
+**Option B: If you have Git installed:**
 ```bash
 git clone https://github.com/santosry/thyroid-volcano-ppi.git
 ```
 
-#### PASSO 1: Baixe o arquivo de dados (OBRIGATORIO)
+#### STEP 1: Download the data file (REQUIRED)
 
-O script **nao funciona** sem o arquivo de expressao genica. Voce tem duas opcoes:
+The script **will not run** without the gene expression file. You have two options:
 
-**Opcao 1: Download automatico (recomendado):**
-1. Abra o VS Code (ou RStudio)
-2. No menu superior, clique em **File, Open File**
-3. Navegue ate a pasta do projeto e abra o arquivo `run_pipeline.R`
-4. No terminal (ou console do R), digite:
+**Option 1: Automatic download (recommended):**
+1. Open VS Code (or RStudio)
+2. In the top menu, click **File, Open File**
+3. Navigate to the project folder and open the file `run_pipeline.R`
+4. In the terminal (or R console), type:
 ```r
 source("scripts/download_data.R")
 ```
-5. O download sera feito automaticamente (~5 MB). Aguarde a mensagem de confirmacao.
+5. The download will proceed automatically (~5 MB). Wait for the confirmation message.
 
-**Opcao 2: Download manual:**
-1. Acesse este link: **https://xenabrowser.net/?bookmark=c486b845ee2e750c3a9d2fc5145c8426**
-2. No canto superior direito, clique no botao **"Download"**
-3. Selecione **"Download current visualization data"**
-4. Salve o arquivo exatamente como: **`XENA_THCA.tsv`**
-5. Mova o arquivo para a pasta: `data/raw/` (dentro da pasta do projeto)
+**Option 2: Manual download:**
+1. Go to: **https://xenabrowser.net/?bookmark=c486b845ee2e750c3a9d2fc5145c8426**
+2. In the top right corner, click the **"Download"** button
+3. Select **"Download current visualization data"**
+4. Save the file exactly as: **`XENA_THCA.tsv`**
+5. Move the file to: `data/raw/` (inside the project folder)
 
-> **Importante:** O arquivo DEVE estar em: `thyroid-volcano-ppi/data/raw/XENA_THCA.tsv`
+> The file MUST be located at: `thyroid-volcano-ppi/data/raw/XENA_THCA.tsv`
 
-#### PASSO 2: Instale os pacotes necessarios
+#### STEP 2: Install required packages
 
-Na primeira vez que rodar, o script instala tudo automaticamente. Mas se quiser instalar antes:
+The first time you run it, the script installs everything automatically. To install beforehand:
 
-1. Abra o VS Code (ou RStudio)
-2. No terminal (ou console do R), copie e cole o seguinte comando:
+1. Open VS Code (or RStudio)
+2. In the terminal (or R console), copy and paste:
 ```r
 install.packages("renv")
 renv::restore()
 ```
-3. Aguarde a instalacao terminar (pode levar de 5 a 15 minutos, dependendo da sua internet)
-4. Varios pacotes serao instalados: e normal aparecerem muitas mensagens
+3. Wait for the installation to finish (5 to 15 minutes, depending on your internet)
+4. Many packages will be installed; seeing many messages is normal
 
-> **O que esta acontecendo?** O comando `renv::restore()` esta instalando exatamente as mesmas versoes de pacotes que os autores usaram. Isso garante que o resultado seja reproduzivel.
+> The `renv::restore()` command installs the exact same package versions the authors used. This ensures reproducible results.
 
-#### PASSO 3: Execute o script
+#### STEP 3: Run the script
 
-1. No VS Code (ou RStudio), abra o arquivo `run_pipeline.R`
-2. Execute o script: no VS Code pressione `Ctrl+Shift+S`, ou no RStudio clique em **"Source"** (canto superior direito)
-   - Ou digite no console:
+1. In VS Code (or RStudio), open the file `run_pipeline.R`
+2. Run the script: in VS Code press `Ctrl+Shift+S`, or in RStudio click **"Source"** (top right corner)
+   - Or type in the console:
 ```r
 source("run_pipeline.R")
 ```
-3. Aguarde de **3 a 5 minutos** (o script precisa de internet para acessar os bancos de dados STRING e KEGG)
-4. Se tudo der certo, voce vera a mensagem: **"PIPELINE COMPLETED SUCCESSFULLY"**
+3. Wait **3 to 5 minutes** (the script needs internet to access STRING and KEGG databases)
+4. If successful, you will see: **"PIPELINE COMPLETED SUCCESSFULLY"**
 
-#### PASSO 4: Veja os resultados
+#### STEP 4: View the results
 
-Todos os resultados estarao na pasta `results/`:
+All results are in the `results/` folder:
 
-- **Figuras:** `results/figures/`
-  - `Fig1_Volcano_THCA_vs_Normal.png` (e `.pdf`) : Volcano Plot
-  - `Fig2_PPI_Network_THCA_DEGs.png` (e `.pdf`) : Rede de interacao proteina-proteina
-- **Tabelas:** `results/tables/`
-- **Metadados da rede:** `results/network/`
-
----
-
-## Desenho do Estudo
-
-### Metodo
-
-| Etapa | Metodo | Ferramenta |
-|-------|--------|------------|
-| Expressao diferencial | Modelo linear + Bayes empirico | limma (Bioconductor) |
-| Contraste | THCA vs Normal (GTEx) | makeContrasts |
-| Correcao multipla | Benjamini-Hochberg (FDR) | topTable |
-| Rede PPI | STRING REST API v12.0 | httr + jsonlite |
-| Centralidade | Betweenness, degree, closeness, hub score | igraph |
-| Visualizacao | Volcano Plot + Rede PPI (Cell Press standard) | ggplot2 + ggrepel + ggraph |
-
-### Fontes de Dados
-
-| Fonte | Descricao | Acesso |
-|-------|-----------|--------|
-| **TCGA THCA** | 504 amostras de carcinoma papilifero de tireoide | UCSC Xena Browser |
-| **GTEx Thyroid** | 279 amostras de tecido normal de tireoide | UCSC Xena Browser |
-| **KEGG hsa04919** | Via de sinalizacao do hormonio tireoidiano | KEGG REST API |
-| **STRING v12.0** | Interacoes proteina-proteina (high confidence >= 700) | STRING REST API |
-
-### Parametros da Analise
-
-| Parametro | Valor | Significado |
-|-----------|-------|-------------|
-| log2FC minimo | 1.0 | Mudanca de pelo menos 2x na expressao |
-| FDR maximo | 0.05 | Maximo de 5% de falsos positivos (Benjamini-Hochberg) |
-| Filtro de expressao | >0.5 em >=10% | Genes precisam ter sinal detectavel |
-| Escore STRING minimo | 700 | Alta confianca na interacao proteica |
-| Via KEGG | hsa04919 | Sinalizacao do hormonio tireoidiano |
-| Versao STRING | 12.0 | Versao mais recente do banco |
-| Seed | 42 | Garante reproducibilidade dos resultados |
-
-### Como interpretar os resultados
-
-#### Figura 1: Volcano Plot
-
-O Volcano Plot e o grafico mais comum em estudos de expressao genica.
-
-| Elemento | O que significa |
-|----------|----------------|
-| **Eixo X** | `log2(fold change)`: direcao e intensidade da mudanca. Valores **positivos** = gene mais expresso no tumor. Valores **negativos** = gene menos expresso no tumor |
-| **Eixo Y** | `-log10(valor-p ajustado)`: significancia estatistica. Quanto **mais alto** o ponto, **mais confiavel** e a diferenca |
-| **Pontos azuis** | Genes **superexpressos** no tumor (9 genes). A atividade desses genes esta aumentada no cancer |
-| **Pontos magenta** | Genes **subexpressos** no tumor (20 genes). A atividade desses genes esta diminuida no cancer |
-| **Pontos cinza** | Genes sem diferenca significativa (90 genes) |
-| **Linhas tracejadas** | Limiares estatisticos: linha vertical = 2x de mudanca; linha horizontal = 5% de taxa de falsa descoberta (FDR) |
-| **Circulos abertos** | Genes que pertencem a via KEGG do hormonio tireoidiano (hsa04919) |
-| **Nomes nos pontos** | Genes mais relevantes identificados com ggrepel |
-
-**Resumo:** Genes no canto superior direito = mais ativos no tumor, com alta confianca estatistica. Genes no canto superior esquerdo = menos ativos no tumor. No total, **29 genes** mostraram diferenca significativa (9 up, 20 down).
-
-#### Figura 2: Rede de Interacao Proteina-Proteina (PPI)
-
-A rede PPI mostra como as proteinas dos genes alterados interagem fisicamente umas com as outras.
-
-| Elemento | O que significa |
-|----------|----------------|
-| **Cada circulo (no)** | Uma proteina codificada por um gene diferencialmente expresso |
-| **Cores dos nos** | Cada cor representa um **modulo funcional**: proteinas que trabalham juntas na mesma funcao biologica (detectado pelo algoritmo walktrap) |
-| **Tamanho do no** | Proporcional ao **grau de conectividade** (degree): quantas outras proteinas ela interage. Quanto maior, mais conectada |
-| **Borda grossa escura** | **Proteina Hub**: proteina central da rede, com muitas conexoes. Sao 5 hubs identificados |
-| **Linhas entre nos** | Interacao fisica entre duas proteinas, conforme STRING v12.0 (escore >= 700) |
-| **Linhas cinza** | Interacoes dentro do mesmo modulo funcional |
-| **Linhas rosa claro** | Interacoes entre modulos diferentes |
-
-**IMPORTANTE:** Os **hubs** sao identificados por metricas de centralidade (betweenness, degree). Eles **nao** representam alvos terapeuticos validados, **nao** implicam causalidade e **nao** substituem validacao experimental. Sao hipoteses geradas por metodos computacionais exploratorios.
+- **Figures:** `results/figures/`
+  - `Fig1_Volcano_THCA_vs_Normal.png` (and `.pdf`) : Volcano Plot
+  - `Fig2_PPI_Network_THCA_DEGs.png` (and `.pdf`) : PPI Network
+- **Tables:** `results/tables/`
+- **Network metadata:** `results/network/`
 
 ---
 
-## Limitacoes
+## Study Design
 
-Esta analise possui limitacoes importantes que devem ser consideradas na interpretacao:
+### Methods
 
-1. **Efeito de batch TCGA/GTEx:** As amostras de tumor (TCGA) e normal (GTEx) vem de fontes diferentes, com protocolos de sequenciamento distintos. Nao foi aplicada correcao de batch effect. Diferencas observadas podem refletir, em parte, vies tecnico.
+| Step | Method | Tool |
+|------|--------|------|
+| Differential expression | Linear model + empirical Bayes | limma (Bioconductor) |
+| Contrast | THCA vs Normal (GTEx) | makeContrasts |
+| Multiple testing correction | Benjamini-Hochberg (FDR) | topTable |
+| PPI network | STRING REST API v12.0 | httr + jsonlite |
+| Centrality | Betweenness, degree, closeness, hub score | igraph |
+| Visualization | Volcano Plot + PPI Network (Cell Press standard) | ggplot2 + ggrepel + ggraph |
 
-2. **Associacao vs causalidade:** Expressao diferencial indica associacao estatistica, nao relacao causal. Genes identificados como DEGs podem ser consequencia (e nao causa) do processo neoplasico.
+### Data Sources
 
-3. **Rede PPI in silico:** As interacoes proteina-proteina sao preditas/inferidas pelo banco STRING (evidencia combinada: texto, experimentos, co-expressao, etc.). Nao ha validacao experimental direta.
+| Source | Description | Access |
+|--------|-------------|--------|
+| **TCGA THCA** | 504 papillary thyroid carcinoma samples | UCSC Xena Browser |
+| **GTEx Thyroid** | 279 normal thyroid tissue samples | UCSC Xena Browser |
+| **KEGG hsa04919** | Thyroid hormone signaling pathway | KEGG REST API |
+| **STRING v12.0** | Protein-protein interactions (high confidence >= 700) | STRING REST API |
 
-4. **Hubs exploratorios:** Proteinas hub sao definidas por metricas de centralidade de rede. Elas **nao** devem ser interpretadas como alvos terapeuticos ou biomarcadores sem validacao adicional.
+### Analysis Parameters
 
-5. **Generalizacao:** Os resultados se aplicam ao contexto especifico THCA (carcinoma papilifero) com dados TCGA/GTEx. Extrapolacao para outros subtipos histologicos requer cautela.
+| Parameter | Value | Meaning |
+|-----------|-------|---------|
+| Minimum |log2FC| | 1.0 | At least 2-fold change in expression |
+| Maximum FDR | 0.05 | Maximum 5% false positives (Benjamini-Hochberg) |
+| Expression filter | >0.5 in >=10% | Genes must have detectable signal |
+| Minimum STRING score | 700 | High confidence in protein interaction |
+| KEGG pathway | hsa04919 | Thyroid hormone signaling |
+| STRING version | 12.0 | Latest database release |
+| Seed | 42 | Ensures reproducible results |
 
-6. **Dependencia de APIs externas:** O pipeline requer conexao com internet para STRING e KEGG. Mudancas nessas APIs podem afetar a reprodutibilidade futura.
+### How to Interpret the Results
+
+#### Figure 1: Volcano Plot
+
+The Volcano Plot is the most common graph in gene expression studies.
+
+| Element | Meaning |
+|----------|---------|
+| **X axis** | `log2(fold change)`: direction and magnitude of change. **Positive** = gene more expressed in tumor. **Negative** = gene less expressed in tumor |
+| **Y axis** | `-log10(adjusted p-value)`: statistical significance. The **higher** the point, the **more reliable** the difference |
+| **Blue points** | Genes **upregulated** in the tumor (9 genes). Activity increased in cancer |
+| **Magenta points** | Genes **downregulated** in the tumor (20 genes). Activity decreased in cancer |
+| **Grey points** | Genes with no significant difference (90 genes) |
+| **Dashed lines** | Statistical thresholds: vertical line = 2-fold change; horizontal line = 5% false discovery rate (FDR) |
+| **Open circles** | Genes belonging to the KEGG thyroid hormone pathway (hsa04919) |
+| **Gene labels** | Most relevant genes identified with ggrepel |
+
+**Summary:** Genes in the upper right = more active in tumor, with high statistical confidence. Genes in the upper left = less active in tumor. In total, **29 genes** showed significant difference (9 up, 20 down).
+
+#### Figure 2: Protein-Protein Interaction (PPI) Network
+
+The PPI network shows how the proteins of altered genes physically interact with each other.
+
+| Element | Meaning |
+|----------|---------|
+| **Each circle (node)** | A protein encoded by a differentially expressed gene |
+| **Node colors** | Each color represents a **functional module**: proteins working together in the same biological function (detected by the walktrap algorithm) |
+| **Node size** | Proportional to **degree centrality**: how many other proteins it interacts with. Larger = more connected |
+| **Thick dark border** | **Hub protein**: central network protein with many connections. 5 hubs identified |
+| **Lines between nodes** | Physical interaction between two proteins, per STRING v12.0 (score >= 700) |
+| **Grey lines** | Interactions within the same functional module |
+| **Light pink lines** | Interactions between different modules |
+
+**IMPORTANT:** **Hubs** are identified by network centrality metrics (betweenness, degree). They **do not** represent validated therapeutic targets, **do not** imply causality, and **do not** replace experimental validation. They are hypotheses generated by exploratory computational methods.
 
 ---
 
-## Estrutura do Pipeline
+## Limitations
+
+This analysis has important limitations to consider when interpreting results:
+
+1. **TCGA/GTEx batch effect:** Tumor (TCGA) and normal (GTEx) samples come from different sources with distinct sequencing protocols. No batch effect correction was applied. Observed differences may partially reflect technical bias.
+
+2. **Association vs. causality:** Differential expression indicates statistical association, not causal relationship. Identified DEGs may be a consequence (not a cause) of the neoplastic process.
+
+3. **In silico PPI network:** Protein-protein interactions are predicted/inferred by the STRING database (combined evidence: text mining, experiments, co-expression, etc.). There is no direct experimental validation.
+
+4. **Exploratory hubs:** Hub proteins are defined by network centrality metrics. They should **not** be interpreted as therapeutic targets or biomarkers without additional validation.
+
+5. **Generalizability:** Results apply to the specific THCA (papillary carcinoma) context with TCGA/GTEx data. Extrapolation to other histological subtypes requires caution.
+
+6. **External API dependency:** The pipeline requires internet for STRING and KEGG. Changes to these APIs may affect future reproducibility.
+
+---
+
+## Pipeline Structure
 
 ```
 thyroid-volcano-ppi/
-├── run_pipeline.R              Script principal (e so rodar este!)
+├── run_pipeline.R              Main script (just run this!)
 ├── R/
-│   ├── 00_setup.R              Parametros, pacotes, cores, check internet
-│   ├── 01_functions.R          Funcoes auxiliares (KEGG, STRING, export)
-│   ├── 02_import.R             Importacao e validacao dos dados
-│   ├── 03_deg.R                Expressao diferencial (limma + Bayes empirico)
-│   ├── 04_volcano.R            Figura 1: Volcano Plot (PNG + PDF)
-│   ├── 05_ppi.R                Figura 2: Rede PPI (PNG + PDF)
-│   └── 06_supplementary.R      Tabelas suplementares S1-S4
+│   ├── 00_setup.R              Parameters, packages, colors, internet check
+│   ├── 01_functions.R          Core functions (KEGG, STRING, export)
+│   ├── 02_import.R             Data import and validation
+│   ├── 03_deg.R                Differential expression (limma + empirical Bayes)
+│   ├── 04_volcano.R            Figure 1: Volcano Plot (PNG + PDF)
+│   ├── 05_ppi.R                Figure 2: PPI Network (PNG + PDF)
+│   └── 06_supplementary.R      Supplementary tables S1-S4
 ├── data/
-│   ├── raw/                    Coloque XENA_THCA.tsv aqui
-│   ├── processed/              Dados intermediarios
-│   └── string_cache/           Cache do STRING
+│   ├── raw/                    Place XENA_THCA.tsv here
+│   ├── processed/              Intermediate data
+│   └── string_cache/           STRING cache
 ├── scripts/
-│   ├── download_data.R         Download automatico dos dados
-│   └── setup_renv.R            Inicializacao do renv
+│   ├── download_data.R         Automatic data download
+│   └── setup_renv.R            renv initialization
 ├── results/
-│   ├── figures/                PNGs 600 dpi + PDFs vetoriais
-│   ├── tables/                 Tabelas TSV (7 principais + 4 suplementares)
-│   └── network/                Metadados da rede PPI
+│   ├── figures/                600 dpi PNGs + vector PDFs
+│   ├── tables/                 TSV tables (7 main + 4 supplementary)
+│   └── network/                PPI network metadata
 ├── tests/
-│   ├── testthat.R              Runner de testes
-│   └── testthat/               Testes unitarios (com e sem internet)
-├── docs/                       Documentacao suplementar
-├── logs/                       Logs de execucao + sessionInfo()
-├── Dockerfile                  Container Docker reproduzivel
-├── renv.lock                   Versoes exatas dos pacotes R
+│   ├── testthat.R              Test runner
+│   └── testthat/               Unit tests (with and without internet)
+├── docs/                       Supplementary documentation
+├── logs/                       Execution logs + sessionInfo()
+├── Dockerfile                  Reproducible Docker container
+├── renv.lock                   Exact R package versions
 ├── LICENSE                     MIT
-└── CITATION.cff                Metadados de citacao
+└── CITATION.cff                Citation metadata
 ```
 
 ---
 
-## Como Executar
+## How to Run
 
 ```bash
-# 1. Clone o repositorio
+# 1. Clone the repository
 git clone https://github.com/santosry/thyroid-volcano-ppi.git
 cd thyroid-volcano-ppi
 
-# 2. Baixe os dados (automatico ou manual)
+# 2. Download data (automatic or manual)
 Rscript scripts/download_data.R
 
-# 3. Restaure o ambiente R (opcional, mas recomendado)
+# 3. Restore R environment (recommended)
 R -e 'install.packages("renv"); renv::restore()'
 
-# 4. Execute o pipeline
+# 4. Run the pipeline
 Rscript run_pipeline.R
 
-# 5. Execute os testes (opcional)
+# 5. Run tests (optional)
 R -e 'testthat::test_dir("tests/testthat")'
 ```
 
-**Tempo estimado:** 3-5 minutos com internet.
+**Estimated time:** 3-5 minutes with internet.
 
 ---
 
-## Outputs e Interpretacao
+## Outputs and Interpretation
 
-### Tabelas principais (`results/tables/`)
+### Main Tables (`results/tables/`)
 
-| Arquivo | Conteudo |
+| File | Content |
 |---------|---------|
-| `T01_sample_composition.tsv` | Quantas amostras de cada tipo (Normal vs THCA) foram analisadas |
-| `T02_deg_summary.tsv` | Resumo dos parametros da analise: quantos genes testados, quantos DEGs, thresholds usados |
-| `T03_deg_full_results.tsv` | Resultado completo: todos os genes com log2FC, valor-p, valor-p ajustado, classificacao (Up/Down/NS) |
-| `T04_top20_degs.tsv` | Os 20 genes com maior diferenca de expressao |
-| `T05_kegg_missing_genes.tsv` | Genes da via KEGG que nao foram detectados nos dados |
-| `T06_hub_proteins.tsv` | Proteinas hub da rede PPI com metricas de centralidade |
-| `T07_kegg_degs_ppi.tsv` | Tabela integrada: genes KEGG que sao DEGs + suas metricas na rede PPI |
+| `T01_sample_composition.tsv` | Sample counts by type (Normal vs THCA) |
+| `T02_deg_summary.tsv` | Analysis summary: genes tested, DEGs found, thresholds |
+| `T03_deg_full_results.tsv` | Complete results: all genes with log2FC, p-value, adjusted p-value, classification (Up/Down/NS) |
+| `T04_top20_degs.tsv` | Top 20 genes with largest expression differences |
+| `T05_kegg_missing_genes.tsv` | KEGG pathway genes not detected in the data |
+| `T06_hub_proteins.tsv` | PPI network hub proteins with centrality metrics |
+| `T07_kegg_degs_ppi.tsv` | Integrated table: KEGG DEGs + PPI network metrics |
 
-### Metadados da rede (`results/network/`)
+### Network Metadata (`results/network/`)
 
-| Arquivo | Conteudo |
+| File | Content |
 |---------|---------|
-| `N01_string_mapping.tsv` | Mapeamento: gene -> ID da proteina no STRING |
-| `N02_string_interactions.tsv` | Lista de interacoes proteina-proteina usadas na rede |
-| `N03_centrality_metrics.tsv` | Metricas completas de centralidade para cada proteina |
-| `N04_network_summary.tsv` | Estatisticas globais da rede (nos, arestas, hubs, comunidades) |
+| `N01_string_mapping.tsv` | Gene to STRING protein ID mapping |
+| `N02_string_interactions.tsv` | Protein-protein interactions used in the network |
+| `N03_centrality_metrics.tsv` | Complete centrality metrics for each protein |
+| `N04_network_summary.tsv` | Global network statistics (nodes, edges, hubs, communities) |
 
-### Parametros das figuras
+### Figure Specifications
 
-Ambas as figuras seguem o padrao editorial da **Nature Communications / Cell Press**:
+Both figures follow **Nature Communications / Cell Press** editorial standards:
 
-| Propriedade | Especificacao |
+| Property | Specification |
 |-------------|---------------|
-| Formato | PNG 600 dpi + PDF vetorial |
+| Format | 600 dpi PNG + vector PDF |
 | Volcano Plot | 180 x 150 mm |
-| Rede PPI | 180 x 180 mm |
-| Tipografia | Sans-serif (Arial/Helvetica), 14pt |
-| Fundo | Branco, eixos abertos |
-| Cores | Azul `#4477AA` (Superexpresso), Magenta `#AA4488` (Subexpresso) |
-| Rotulos | ggrepel com linhas guia |
-| Rede PPI | Layout Fruchterman-Reingold, comunidades walktrap |
+| PPI Network | 180 x 180 mm |
+| Typography | Sans-serif (Arial/Helvetica), 14pt |
+| Background | White, open axes |
+| Colors | Blue `#4477AA` (Upregulated), Magenta `#AA4488` (Downregulated) |
+| Labels | ggrepel with leader lines |
+| PPI Network | Fruchterman-Reingold layout, walktrap communities |
 
 ---
 
-## Perguntas frequentes (FAQ)
+## FAQ
 
-### "Apareceu um erro dizendo que o arquivo XENA_THCA.tsv nao foi encontrado"
+### "Error: XENA_THCA.tsv file not found"
 
-**Solucao:** Volte ao PASSO 1 acima e baixe o arquivo de dados.
+**Solution:** Go back to STEP 1 above and download the data file.
 
-### "O download automatico falhou"
+### "Automatic download failed"
 
-**Solucao:** Use o download manual (Opcao 2 do PASSO 1).
+**Solution:** Use the manual download (Option 2 in STEP 1).
 
-### "Deu erro de conexao com a internet durante a analise"
+### "Internet connection error during analysis"
 
-**Solucao:** O script verifica a conectividade no inicio. STRING e KEGG requerem internet. Verifique sua conexao e tente novamente.
+**Solution:** The script checks connectivity at startup. STRING and KEGG require internet. Check your connection and try again.
 
-### "Quanto tempo demora para rodar?"
+### "How long does it take to run?"
 
-Cerca de **3 a 5 minutos** com boa conexao. Primeira execucao: +10-15 min para instalar pacotes.
+About **3 to 5 minutes** with a good internet connection. First run adds 10-15 minutes for package installation.
 
-### "O que e 'log2 fold change'?"
+### "What is 'log2 fold change'?"
 
-Medida de mudanca na expressao. log2FC de **+1** = gene 2x mais expresso no tumor. log2FC de **+2** = 4x mais expresso. log2FC de **-1** = 2x menos expresso.
+A measure of expression change. log2FC of **+1** = gene is 2x more expressed in tumor. log2FC of **+2** = 4x more expressed. log2FC of **-1** = 2x less expressed.
 
-### "O que e 'FDR' ou 'valor-p ajustado'?"
+### "What is 'FDR' or 'adjusted p-value'?"
 
-O valor-p mede a probabilidade de a diferenca ser obra do acaso. Como testamos muitos genes ao mesmo tempo, o valor-p e ajustado (correcao Benjamini-Hochberg). **FDR < 0,05** significa que aceitamos no maximo 5% de falsos positivos.
+The p-value measures the probability that the observed difference is due to chance. Since many genes are tested simultaneously, the p-value is adjusted (Benjamini-Hochberg correction). **FDR < 0.05** means we accept at most 5% false positives among the identified DEGs.
 
-### "Nao sei usar o R. Tem outro jeito?"
+### "I don't know how to use R. Is there another way?"
 
-Nao se preocupe: voce so precisa copiar e colar os comandos. Com o VS Code ou RStudio, e ainda mais facil: abra o script e execute. O R fara todo o trabalho.
+You just need to copy and paste the commands. With VS Code or RStudio it is even easier: open the script and run it. R will do all the work.
 
-### "Quero mudar os parametros da analise"
+### "I want to change the analysis parameters"
 
-Abra o arquivo `R/00_setup.R` e altere os valores dentro da lista `THRESHOLD`:
+Open the file `R/00_setup.R` and modify the values in the `THRESHOLD` list:
 ```r
 THRESHOLD <- list(
-  lfc        = 1.0,     # Aumente para ser mais restritivo
-  fdr        = 0.05,    # Diminua para ser mais rigoroso (ex: 0.01)
-  string     = 700      # Diminua para incluir mais interacoes (ex: 400)
+  lfc        = 1.0,     # Increase for stricter fold-change cutoff
+  fdr        = 0.05,    # Decrease for more stringency (e.g., 0.01)
+  string     = 700      # Decrease to include more interactions (e.g., 400)
 )
 ```
-Depois execute o script novamente.
+Then run the script again.
 
 ---
 
-## Reprodutibilidade
+## Reproducibility
 
-- `set.seed(42)`: a semente fixa garante resultados identicos
-- Todos os parametros em `R/00_setup.R`
-- Caminhos via `here::here()`: sem caminhos absolutos
-- `sessionInfo()` salvo em `logs/`
-- `renv.lock`: versoes exatas de todos os pacotes
-- `Dockerfile`: ambiente Linux completo e reproduzivel
-- `CITATION.cff`: metadados de citacao padronizados
-- `results/CHECKSUMS.md`: hashes MD5 para verificacao de integridade
-- `check_internet()`: verificacao de conectividade antes de chamadas API
+- `set.seed(42)`: fixed seed ensures identical results
+- All parameters in `R/00_setup.R`
+- Paths via `here::here()`: no absolute paths
+- `sessionInfo()` saved to `logs/`
+- `renv.lock`: exact versions of all R packages
+- `Dockerfile`: full reproducible Linux environment
+- `CITATION.cff`: standardized citation metadata
+- `results/CHECKSUMS.md`: MD5 hashes for output integrity verification
+- `check_internet()`: connectivity validation before API calls
 
-Para verificar a integridade dos outputs apos executar o pipeline:
+To verify output integrity after running the pipeline:
 ```bash
 cd results && md5sum -c CHECKSUMS.md
 ```
 
 ---
 
-## Testes
+## Tests
 
 ```r
-# Executar todos os testes
+# Run all tests
 testthat::test_dir("tests/testthat")
 ```
 
-Testes cobrem: thresholds, classificacao DEG, filtro de expressao, colunas obrigatorias, NAs criticos, exportacao TSV, validacao de escala e filtro de escore STRING. Testes com mock data nao requerem internet.
+Tests cover: thresholds, DEG classification, expression filtering, required columns, critical NAs, TSV export, scale validation, and STRING score filtering. Mock data tests do not require internet.
 
 ---
 
-## Autores
+## Authors
 
-| Autor | ORCID | Afiliacao |
+| Author | ORCID | Affiliation |
 |--------|-------|-----------|
-| **Leticia Maria Dias Freitas** (autora correspondente) | [0009-0009-9930-9588](https://orcid.org/0009-0009-9930-9588) | Escola Tecnica Estadual Joao Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ |
-| Ryan de Paulo Santos | [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001) | Instituto Federal de Educacao, Ciencia e Tecnologia Fluminense (IFFluminense), Campus Campos Guarus, Campos dos Goytacazes, RJ |
-| Thais Faria Coutinho da Silva Pereira | [0009-0005-7091-2480](https://orcid.org/0009-0005-7091-2480) | Escola Tecnica Estadual Joao Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ |
+| **Leticia Maria Dias Freitas** (corresponding author) | [0009-0009-9930-9588](https://orcid.org/0009-0009-9930-9588) | Escola Tecnica Estadual Joao Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ, Brazil |
+| Ryan de Paulo Santos | [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001) | Instituto Federal de Educacao, Ciencia e Tecnologia Fluminense (IFFluminense), Campus Campos Guarus, Campos dos Goytacazes, RJ, Brazil |
+| Thais Faria Coutinho da Silva Pereira | [0009-0005-7091-2480](https://orcid.org/0009-0005-7091-2480) | Escola Tecnica Estadual Joao Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ, Brazil |
 
-**Autora correspondente:** Leticia Maria Dias Freitas: [leticiamariadiasfreitas@gmail.com](mailto:leticiamariadiasfreitas@gmail.com)
+**Corresponding author:** Leticia Maria Dias Freitas: [leticiamariadiasfreitas@gmail.com](mailto:leticiamariadiasfreitas@gmail.com)
 
 ---
 
-## Contribuicoes dos Autores: CRediT Taxonomy
+## Author Contributions: CRediT Taxonomy
 
-| Autor | Contribuicao |
+| Author | Contribution |
 |--------|-------------|
-| **Leticia Maria Dias Freitas** | Conceituacao (Lideranca); Metodologia (Igual); Software (Igual); Analise Formal (Igual); Curadoria de Dados (Igual); Validacao (Igual); Visualizacao (Igual); Investigacao (Igual); Escrita: Rascunho Original (Lideranca); Administracao do Projeto (Suporte) |
-| **Ryan de Paulo Santos** | Conceituacao (Suporte); Metodologia (Igual); Software (Igual); Analise Formal (Igual); Curadoria de Dados (Igual); Validacao (Igual); Visualizacao (Igual); Investigacao (Igual); Escrita: Rascunho Original (Igual); Administracao do Projeto (Lideranca); Escrita: Revisao e Edicao (Suporte) |
-| **Thais Faria Coutinho da Silva Pereira** | Supervisao (Lideranca); Revisao Cientifica (Lideranca); Validacao (Suporte) |
+| **Leticia Maria Dias Freitas** | Conceptualization (Lead); Methodology (Equal); Software (Equal); Formal Analysis (Equal); Data Curation (Equal); Validation (Equal); Visualization (Equal); Investigation (Equal); Writing: Original Draft (Lead); Project Administration (Supporting) |
+| **Ryan de Paulo Santos** | Conceptualization (Supporting); Methodology (Equal); Software (Equal); Formal Analysis (Equal); Data Curation (Equal); Validation (Equal); Visualization (Equal); Investigation (Equal); Writing: Original Draft (Equal); Project Administration (Lead); Writing: Review & Editing (Supporting) |
+| **Thais Faria Coutinho da Silva Pereira** | Supervision (Lead); Scientific Review (Lead); Validation (Supporting) |
 
 ---
 
-## Declaracao de Uso de Inteligencia Artificial
+## Artificial Intelligence Use Disclosure
 
-Em conformidade com a **Portaria CNPq no 2.664/2026**, declaramos que as seguintes ferramentas de IA foram utilizadas como suporte tecnico e metodologico:
+In compliance with **CNPq Ordinance No. 2.664/2026** regarding artificial intelligence use in scientific research, we declare that the following AI tools were used as technical and methodological support:
 
-| Ferramenta | Desenvolvedor | Tarefas |
+| AI Tool | Developer | Tasks Performed |
 |------------|---------------|---------|
-| **DeepSeek-v4-pro** | DeepSeek | Otimizacao de codigo R, auditoria de namespaces, revisao de funcoes estatisticas |
-| **Codex** | OpenAI | Geracao e depuracao de scripts R, suporte a documentacao tecnica |
-| **ChatGPT 5.5** | OpenAI | Revisao textual, estruturacao de documentacao, sugestoes de reprodutibilidade |
-| **Grok** | xAI | Analise exploratoria, prototipagem de visualizacoes, suporte metodologico |
+| **DeepSeek-v4-pro** | DeepSeek | R code optimization, namespace auditing, statistical function review |
+| **Codex** | OpenAI | R script generation and debugging, technical documentation support |
+| **ChatGPT 5.5** | OpenAI | Text review, documentation structuring, reproducibility suggestions |
+| **Grok** | xAI | Exploratory analysis, visualization prototyping, methodological support |
 
-**Em todos os casos**, a participacao humana foi integral e soberana. **Nenhuma conclusao cientifica foi derivada por IA.** Para o registro completo, consulte a tabela `S4_ai_assisted_tasks.tsv`.
-
----
-
-## Licenca
-
-MIT License: veja o arquivo [LICENSE](LICENSE)
+**In all cases**, human participation was integral and sovereign. **No scientific conclusions were derived by AI.** For the complete record, see table `S4_ai_assisted_tasks.tsv`.
 
 ---
 
-## Como citar
+## License
+
+MIT License: see [LICENSE](LICENSE)
+
+---
+
+## How to Cite
 
 ```bibtex
 @software{freitas2026thyroid,
@@ -476,11 +476,11 @@ MIT License: veja o arquivo [LICENSE](LICENSE)
 }
 ```
 
-Veja tambem `CITATION.cff` para metadados de citacao estruturados.
+See also `CITATION.cff` for structured citation metadata.
 
 ---
 
-## Referencias
+## References
 
 1. Goldman MJ, Craft B, Hastie M, Repecka K, McDade F, Kamath A, Banerjee A, Luo Y, Rogers D, Brooks AN, Zhu J, Haussler D. Visualizing and interpreting cancer genomics data via the Xena platform. *Nature Biotechnology*. 2020;38(6):675-678. doi:[10.1038/s41587-020-0546-8](https://doi.org/10.1038/s41587-020-0546-8)
 
@@ -492,47 +492,47 @@ Veja tambem `CITATION.cff` para metadados de citacao estruturados.
 
 5. Kanehisa M, Furumichi M, Sato Y, Kawashima M, Ishiguro-Watanabe M. KEGG for taxonomy-based analysis of pathways and genomes. *Nucleic Acids Research*. 2023;51(D1):D587-D592. doi:[10.1093/nar/gkac963](https://doi.org/10.1093/nar/gkac963)
 
-6. Csardi G, Nepusz T, Traag V, Horvat S, Zanini F, Noom D, Muller K. igraph: Network Analysis and Visualization. R package version 2.0.3. CRAN; 2024. Disponivel em: [https://CRAN.R-project.org/package=igraph](https://CRAN.R-project.org/package=igraph)
+6. Csardi G, Nepusz T, Traag V, Horvat S, Zanini F, Noom D, Muller K. igraph: Network Analysis and Visualization. R package version 2.0.3. CRAN; 2024. Available at: [https://CRAN.R-project.org/package=igraph](https://CRAN.R-project.org/package=igraph)
 
-7. Pedersen TL. ggraph: An Implementation of Grammar of Graphics for Graphs and Networks. R package version 2.2.1. CRAN; 2024. Disponivel em: [https://CRAN.R-project.org/package=ggraph](https://CRAN.R-project.org/package=ggraph)
+7. Pedersen TL. ggraph: An Implementation of Grammar of Graphics for Graphs and Networks. R package version 2.2.1. CRAN; 2024. Available at: [https://CRAN.R-project.org/package=ggraph](https://CRAN.R-project.org/package=ggraph)
 
 ---
 
-## Trilha de Auditoria do Codigo-Fonte (22/jun/2026)
+## Source Code Audit Trail (June 22, 2026)
 
-### Correcoes aplicadas (v3.0.0)
+### Critical Fixes Applied (v3.0.0)
 
-| # | Arquivo | Problema | Solucao |
+| # | File | Issue | Resolution |
 |---|---------|----------|---------|
-| 1 | `01_functions.R` | `select()` conflitava com `AnnotationDbi::select` | `dplyr::select()` |
-| 2 | `05_ppi.R` | `components()` / `degree()` sem namespace | `igraph::components()`, `igraph::degree()` |
-| 3 | `01_functions.R` | `hub_score()` depreciado (igraph 2.0.3) | `igraph::hits_scores()` |
+| 1 | `01_functions.R` | `select()` conflicted with `AnnotationDbi::select` | `dplyr::select()` |
+| 2 | `05_ppi.R` | `components()` / `degree()` unqualified | `igraph::components()`, `igraph::degree()` |
+| 3 | `01_functions.R` | `hub_score()` deprecated (igraph 2.0.3) | `igraph::hits_scores()` |
 | 4 | `00_setup.R` | Bioconductor via `install.packages()` | `BiocManager::install()` |
-| 5 | `run_pipeline.R` / `00_setup.R` | Duplicacao de deteccao de here/PROJECT_ROOT | Unificado em `00_setup.R` |
-| 6 | `04_volcano.R` | Filtro KEGG com comparacao incorreta | Corrigido |
-| 7 | `05_ppi.R` | Layout calculado duas vezes | Calculo unico |
-| 8 | `02_import.R` | Sem verificacao de duplicatas ou NAs | Adicionado `anyDuplicated()`, `na_frac` |
-| 9 | `00_setup.R` | Sem verificacao de internet | Adicionado `check_internet()` |
-| 10 | `04_volcano.R` / `05_ppi.R` | Sem export PDF | Adicionado PDF vetorial |
-| 11 | `run_pipeline.R` | Sem disclaimer de causalidade | Adicionado ao final |
-| 12 | `05_ppi.R` | Hubs sem caveat | Adicionado aviso de interpretacao |
+| 5 | `run_pipeline.R` / `00_setup.R` | Duplicated here/PROJECT_ROOT detection | Unified in `00_setup.R` |
+| 6 | `04_volcano.R` | Incorrect KEGG filter comparison | Fixed |
+| 7 | `05_ppi.R` | Layout computed twice | Single computation |
+| 8 | `02_import.R` | No duplicate or NA checks | Added `anyDuplicated()`, `na_frac` |
+| 9 | `00_setup.R` | No internet connectivity check | Added `check_internet()` |
+| 10 | `04_volcano.R` / `05_ppi.R` | No PDF export | Added vector PDF |
+| 11 | `run_pipeline.R` | No causality disclaimer | Added at pipeline end |
+| 12 | `05_ppi.R` | Hubs without interpretation caveat | Added warning about exploratory nature |
 
-### Checklist de reprodutibilidade
+### Reproducibility Checklist
 
-| Verificacao | Status |
+| Check | Status |
 |-------------|--------|
-| Sem caminhos absolutos | [x] `here::here()` |
-| Semente fixa | [x] `set.seed(42)` |
-| Parametros centralizados | [x] `00_setup.R` |
-| Session info capturado | [x] `logs/session_info.txt` |
-| Lockfile de versoes | [x] `renv.lock` |
-| Container Docker | [x] `Dockerfile` |
-| Testes unitarios | [x] `tests/testthat/` |
-| Dados documentados | [x] Bookmark + auto-download |
-| Metadados de citacao | [x] `CITATION.cff` |
+| No absolute paths | [x] `here::here()` |
+| Fixed seed | [x] `set.seed(42)` |
+| Centralized parameters | [x] `00_setup.R` |
+| Session info captured | [x] `logs/session_info.txt` |
+| Version lockfile | [x] `renv.lock` |
+| Docker container | [x] `Dockerfile` |
+| Unit tests | [x] `tests/testthat/` |
+| Data documented | [x] Bookmark + auto-download |
+| Citation metadata | [x] `CITATION.cff` |
 | Internet check | [x] `check_internet()` |
-| Disclaimer causalidade | [x] README + final do pipeline |
+| Causality disclaimer | [x] README + pipeline end |
 
 ---
 
-*Pipeline mantido por [Ryan de Paulo Santos](https://github.com/santosry), ORCID: [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001)*
+*Pipeline maintained by [Ryan de Paulo Santos](https://github.com/santosry), ORCID: [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001)*
