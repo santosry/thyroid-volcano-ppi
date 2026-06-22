@@ -264,11 +264,21 @@ Depois é só rodar o script novamente.
 
 | Autor | ORCID | Afiliação |
 |--------|-------|-----------|
-| Ryan de Paulo Santos | [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001) | Instituto Federal de Educação, Ciência e Tecnologia Fluminense (IFFluminense) — Campus Campos Guarus, Campos dos Goytacazes, RJ |
 | **Letícia Maria Dias Freitas** ✉ | [0009-0009-9930-9588](https://orcid.org/0009-0009-9930-9588) | Escola Técnica Estadual João Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ |
+| Ryan de Paulo Santos | [0009-0005-6770-2001](https://orcid.org/0009-0005-6770-2001) | Instituto Federal de Educação, Ciência e Tecnologia Fluminense (IFFluminense) — Campus Campos Guarus, Campos dos Goytacazes, RJ |
 | Thaís Faria Coutinho da Silva Pereira | [0009-0005-7091-2480](https://orcid.org/0009-0005-7091-2480) | Escola Técnica Estadual João Barcelos Martins (FAETEC), Campos dos Goytacazes, RJ |
 
 ✉ **Autora correspondente:** Letícia Maria Dias Freitas — [leticiamariadiasfreitas@gmail.com](mailto:leticiamariadiasfreitas@gmail.com)
+
+---
+
+## 📋 Contribuições dos Autores — CRediT Taxonomy
+
+| Autor | Contribuição |
+|--------|-------------|
+| **Letícia Maria Dias Freitas** | Conceituação (Liderança); Metodologia (Igual); Software (Igual); Análise Formal (Igual); Curadoria de Dados (Igual); Validação (Igual); Visualização (Igual); Investigação (Igual); Escrita – Rascunho Original (Liderança); Administração do Projeto (Suporte) |
+| **Ryan de Paulo Santos** | Conceituação (Suporte); Metodologia (Igual); Software (Igual); Análise Formal (Igual); Curadoria de Dados (Igual); Validação (Igual); Visualização (Igual); Investigação (Igual); Escrita – Rascunho Original (Igual); Administração do Projeto (Liderança); Escrita – Revisão e Edição (Suporte) |
+| **Thaís Faria Coutinho da Silva Pereira** | Validação (Suporte); Escrita – Revisão e Edição (Liderança); Supervisão (Suporte); Expertise de Domínio e Interpretação Biológica (Liderança); Validação Biológica (Liderança); Revisão Científica (Liderança) |
 
 ---
 
@@ -398,7 +408,7 @@ MIT License — veja o arquivo [LICENSE](LICENSE)
 @software{santos2026thyroid,
   title        = {thyroid-volcano-ppi: Differential Expression and
                   PPI Network Analysis in Thyroid Carcinoma (THCA)},
-  author       = {Ryan de Paulo Santos and Letícia Maria Dias Freitas
+  author       = {Letícia Maria Dias Freitas and Ryan de Paulo Santos
                   and Thaís Faria Coutinho da Silva Pereira},
   year         = {2026},
   url          = {https://github.com/santosry/thyroid-volcano-ppi},
@@ -412,13 +422,19 @@ Veja também `CITATION.cff` para metadados de citação estruturados.
 
 ## 📚 Referências
 
-- **Xena Browser**: Goldman et al. (2020) *Nature Biotechnology* 38:675–678
-- **limma**: Ritchie et al. (2015) *Nucleic Acids Research* 43:e47
-- **STRING**: Szklarczyk et al. (2023) *Nucleic Acids Research* 51:D638–D646
-- **TCGA**: Cancer Genome Atlas Research Network (2014) *Cell* 159:676–690
-- **KEGG**: Kanehisa et al. (2023) *Nucleic Acids Research* 51:D587–D592
-- **igraph**: Csárdi et al. (2024) *CRAN*
-- **ggraph**: Pedersen (2024) *CRAN*
+1. Goldman MJ, Craft B, Hastie M, Repečka K, McDade F, Kamath A, Banerjee A, Luo Y, Rogers D, Brooks AN, Zhu J, Haussler D. Visualizing and interpreting cancer genomics data via the Xena platform. *Nature Biotechnology*. 2020;38(6):675–678. doi:[10.1038/s41587-020-0546-8](https://doi.org/10.1038/s41587-020-0546-8)
+
+2. Ritchie ME, Phipson B, Wu D, Hu Y, Law CW, Shi W, Smyth GK. limma powers differential expression analyses for RNA-sequencing and microarray studies. *Nucleic Acids Research*. 2015;43(7):e47. doi:[10.1093/nar/gkv007](https://doi.org/10.1093/nar/gkv007)
+
+3. Szklarczyk D, Kirsch R, Koutrouli M, Nastou K, Mehryary F, Hachilif R, Gable AL, Fang T, Doncheva NT, Pyysalo S, Bork P, Jensen LJ, von Mering C. The STRING database in 2023: protein–protein association networks and functional enrichment analyses for any sequenced genome of interest. *Nucleic Acids Research*. 2023;51(D1):D638–D646. doi:[10.1093/nar/gkac1000](https://doi.org/10.1093/nar/gkac1000)
+
+4. Cancer Genome Atlas Research Network. Integrated genomic characterization of papillary thyroid carcinoma. *Cell*. 2014;159(3):676–690. doi:[10.1016/j.cell.2014.09.050](https://doi.org/10.1016/j.cell.2014.09.050)
+
+5. Kanehisa M, Furumichi M, Sato Y, Kawashima M, Ishiguro-Watanabe M. KEGG for taxonomy-based analysis of pathways and genomes. *Nucleic Acids Research*. 2023;51(D1):D587–D592. doi:[10.1093/nar/gkac963](https://doi.org/10.1093/nar/gkac963)
+
+6. Csárdi G, Nepusz T, Traag V, Horvát S, Zanini F, Noom D, Müller K. igraph: Network Analysis and Visualization. R package version 2.0.3. CRAN; 2024. Disponível em: [https://CRAN.R-project.org/package=igraph](https://CRAN.R-project.org/package=igraph)
+
+7. Pedersen TL. ggraph: An Implementation of Grammar of Graphics for Graphs and Networks. R package version 2.2.1. CRAN; 2024. Disponível em: [https://CRAN.R-project.org/package=ggraph](https://CRAN.R-project.org/package=ggraph)
 
 ---
 
