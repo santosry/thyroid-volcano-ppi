@@ -9,13 +9,13 @@
 
 ---
 
-> **� Este README foi escrito para profissionais da saúde.**
+> **Este README foi escrito para profissionais da saúde.**
 > Se você nunca usou R ou GitHub na vida, não se preocupe : cada passo está explicado abaixo.
 > As seções mais técnicas estão no final do documento (em inglês).
 
 ---
 
-## � O que este projeto faz? (em linguagem simples)
+## O que este projeto faz? (em linguagem simples)
 
 Este projeto compara **quais genes estão com a atividade alterada** em tumores de tireoide (carcinoma papilífero, THCA) em relação ao tecido normal da tireoide.
 
@@ -32,7 +32,7 @@ O foco é na **via de sinalização do hormônio tireoidiano** (KEGG hsa04919), 
 
 ---
 
-## � O que você precisa ter instalado?
+## O que você precisa ter instalado?
 
 ### 1. Instale o R
 
@@ -43,19 +43,26 @@ O R é um programa gratuito de análise estatística.
 - Clique em **"base"** e depois em **"Download R-X.X.X for Windows"**
 - Execute o instalador e siga os passos: **Avançar → Avançar → Concluir**
 
-> � **O que é o R?** É como se fosse um "Excel turbinado" para análises científicas. Você não precisa saber programar : basta seguir os passos abaixo.
+> **O que é o R?** É como se fosse um "Excel turbinado" para análises científicas. Você não precisa saber programar : basta seguir os passos abaixo.
 
-### 2. Instale o RStudio (opcional, mas recomendado)
+### 2. Instale o VS Code (recomendado) ou RStudio
 
-O RStudio é uma interface mais amigável para usar o R.
+O R pode ser usado com duas interfaces principais. O **VS Code** e a melhor opcao por ser mais moderno e versatil. O **RStudio** tambem funciona.
 
+**VS Code:**
+- Acesse: **https://code.visualstudio.com/**
+- Baixe e instale normalmente
+- Depois, instale a extensao **R** (busque por "R" na aba de extensoes, atalho `Ctrl+Shift+X`)
+- Instale tambem a extensao **R Debugger**
+
+**RStudio:**
 - Acesse: **https://posit.co/download/rstudio-desktop/**
-- Baixe a versão gratuita (RStudio Desktop, Open Source Edition)
+- Baixe a versao gratuita (RStudio Desktop, Open Source Edition)
 - Instale normalmente
 
 ---
 
-## � Passo a passo para rodar o script
+## Passo a passo para rodar o script
 
 ###  Antes de começar: baixe o repositório
 
@@ -74,15 +81,15 @@ git clone https://github.com/santosry/thyroid-volcano-ppi.git
 
 ---
 
-### � PASSO 1: Baixe o arquivo de dados (OBRIGATÓRIO)
+### PASSO 1: Baixe o arquivo de dados (OBRIGATÓRIO)
 
 O script **não funciona** sem o arquivo de expressão gênica. Você tem duas opções:
 
-#### Opção 1 : Download automático (recomendado):
-1. Abra o RStudio
-2. No menu superior, clique em **File → Open File**
-3. Navegue até a pasta do projeto e abra o arquivo `run_pipeline.R`
-4. No console do R (painel inferior), digite:
+#### Opcao 1 : Download automatico (recomendado):
+1. Abra o VS Code (ou RStudio)
+2. No menu superior, clique em **File : Open File**
+3. Navegue ate a pasta do projeto e abra o arquivo `run_pipeline.R`
+4. No terminal (ou console do R), digite:
 ```r
 source("scripts/download_data.R")
 ```
@@ -95,16 +102,16 @@ source("scripts/download_data.R")
 4. Salve o arquivo exatamente como: **`XENA_THCA.tsv`**
 5. Mova o arquivo para a pasta: `data/raw/` (dentro da pasta do projeto)
 
-> � **Importante:** O arquivo DEVE estar em: `thyroid-volcano-ppi/data/raw/XENA_THCA.tsv`
+> **Importante:** O arquivo DEVE estar em: `thyroid-volcano-ppi/data/raw/XENA_THCA.tsv`
 
 ---
 
-### � PASSO 2: Instale os pacotes necessários
+### PASSO 2: Instale os pacotes necessários
 
 Na primeira vez que rodar, o script instala tudo automaticamente. Mas se quiser instalar antes:
 
-1. Abra o RStudio
-2. No console do R (painel inferior), copie e cole o seguinte comando:
+1. Abra o VS Code (ou RStudio)
+2. No terminal (ou console do R), copie e cole o seguinte comando:
 ```r
 install.packages("renv")
 renv::restore()
@@ -112,14 +119,14 @@ renv::restore()
 3. Aguarde a instalação terminar (pode levar de 5 a 15 minutos, dependendo da sua internet)
 4. Vários pacotes serão instalados : é normal aparecerem muitas mensagens
 
-> � **O que está acontecendo?** O comando `renv::restore()` está instalando exatamente as mesmas versões de pacotes que os autores usaram. Isso garante que o resultado seja reproduzível.
+> **O que está acontecendo?** O comando `renv::restore()` está instalando exatamente as mesmas versões de pacotes que os autores usaram. Isso garante que o resultado seja reproduzível.
 
 ---
 
-### � PASSO 3: Execute o script
+### PASSO 3: Execute o script
 
-1. No RStudio, abra o arquivo `run_pipeline.R`
-2. Clique no botão **"Source"** (canto superior direito do editor de script)
+1. No VS Code (ou RStudio), abra o arquivo `run_pipeline.R`
+2. Execute o script: no VS Code pressione `Ctrl+Shift+S`, ou no RStudio clique em **"Source"** (canto superior direito)
    - Ou digite no console:
 ```r
 source("run_pipeline.R")
@@ -129,7 +136,7 @@ source("run_pipeline.R")
 
 ---
 
-### � PASSO 4: Veja os resultados
+### PASSO 4: Veja os resultados
 
 Todos os resultados estarão na pasta `results/`:
 
@@ -141,7 +148,7 @@ Todos os resultados estarão na pasta `results/`:
 
 ---
 
-## � Como interpretar os resultados
+## Como interpretar os resultados
 
 ### Figura 1 : Volcano Plot
 
@@ -153,8 +160,8 @@ O Volcano Plot é o gráfico mais comum em estudos de expressão gênica. Veja c
 |----------|----------------|
 | **Eixo X** | `log₂(fold change)` : que direção e intensidade da mudança. Valores **positivos** = gene mais expresso no tumor. Valores **negativos** = gene menos expresso no tumor |
 | **Eixo Y** | `-log₁₀(valor-p ajustado)` : significância estatística. Quanto **mais alto** o ponto, **mais confiável** é a diferença |
-| **Pontos azuis** � | Genes **superexpressos** no tumor (9 genes). A atividade desses genes está aumentada no câncer |
-| **Pontos magenta** � | Genes **subexpressos** no tumor (20 genes). A atividade desses genes está diminuída no câncer |
+| **Pontos azuis** | Genes **superexpressos** no tumor (9 genes). A atividade desses genes está aumentada no câncer |
+| **Pontos magenta** | Genes **subexpressos** no tumor (20 genes). A atividade desses genes está diminuída no câncer |
 | **Pontos cinza**  | Genes sem diferença significativa (90 genes) |
 | **Linhas tracejadas** | Limiares estatísticos: linha vertical = 2× de mudança; linha horizontal = 5% de taxa de falsa descoberta (FDR) |
 | **Círculos abertos**  | Genes que pertencem à via KEGG do hormônio tireoidiano (hsa04919) |
@@ -191,19 +198,19 @@ A rede PPI mostra como as proteínas dos genes alterados interagem fisicamente u
 
 ---
 
-## � Arquivos gerados e o que cada um significa
+## Arquivos gerados e o que cada um significa
 
 ### Tabelas principais (`results/tables/`)
 
 | Arquivo | O que contém |
 |---------|-------------|
-| `T01_sample_composition.tsv` | � Quantas amostras de cada tipo (Normal vs THCA) foram analisadas |
-| `T02_deg_summary.tsv` | � Resumo dos parâmetros da análise: quantos genes testados, quantos DEGs, thresholds usados |
-| `T03_deg_full_results.tsv` | � Resultado completo: todos os 119 genes com log₂FC, valor-p, valor-p ajustado, classificação (Up/Down/NS) |
+| `T01_sample_composition.tsv` | Quantas amostras de cada tipo (Normal vs THCA) foram analisadas |
+| `T02_deg_summary.tsv` | Resumo dos parâmetros da análise: quantos genes testados, quantos DEGs, thresholds usados |
+| `T03_deg_full_results.tsv` | Resultado completo: todos os 119 genes com log₂FC, valor-p, valor-p ajustado, classificação (Up/Down/NS) |
 | `T04_top20_degs.tsv` |  Os 20 genes com maior diferença de expressão |
 | `T05_kegg_missing_genes.tsv` |  Genes da via KEGG que não foram detectados nos dados |
-| `T06_hub_proteins.tsv` | � Proteínas hub da rede PPI com métricas de centralidade |
-| `T07_kegg_degs_ppi.tsv` | � Tabela integrada: genes KEGG que são DEGs + suas métricas na rede PPI |
+| `T06_hub_proteins.tsv` | Proteínas hub da rede PPI com métricas de centralidade |
+| `T07_kegg_degs_ppi.tsv` | Tabela integrada: genes KEGG que são DEGs + suas métricas na rede PPI |
 
 ### Metadados da rede (`results/network/`)
 
@@ -244,7 +251,7 @@ O valor-p mede a probabilidade de a diferença observada ser obra do acaso. Como
 
 ### "Não sei usar o R. Tem outro jeito?"
 
-Não se preocupe : você só precisa copiar e colar os comandos. Se instalou o RStudio, é ainda mais fácil: abra o script e clique em "Source". O R fará todo o trabalho.
+Nao se preocupe : voce so precisa copiar e colar os comandos. Com o VS Code ou RStudio, e ainda mais facil: abra o script e execute. O R fara todo o trabalho.
 
 ### "Quero mudar os parâmetros da análise (ex: thresholds)"
 
@@ -260,7 +267,7 @@ Depois é só rodar o script novamente.
 
 ---
 
-## � Autores
+## Autores
 
 | Autor | ORCID | Afiliação |
 |--------|-------|-----------|
@@ -272,7 +279,7 @@ Depois é só rodar o script novamente.
 
 ---
 
-## � Contribuições dos Autores : CRediT Taxonomy
+## Contribuições dos Autores : CRediT Taxonomy
 
 | Autor | Contribuição |
 |--------|-------------|
@@ -282,7 +289,7 @@ Depois é só rodar o script novamente.
 
 ---
 
-## � Estrutura do repositório
+## Estrutura do repositório
 
 ```
 thyroid-volcano-ppi/
@@ -332,7 +339,7 @@ thyroid-volcano-ppi/
 
 ---
 
-## � Parâmetros das figuras
+## Parâmetros das figuras
 
 Ambas as figuras seguem o padrão editorial da **Nature Communications / Cell Press**:
 
@@ -349,7 +356,7 @@ Ambas as figuras seguem o padrão editorial da **Nature Communications / Cell Pr
 
 ---
 
-## � Reprodutibilidade
+## Reprodutibilidade
 
 - `set.seed(42)` : a semente fixa garante resultados idênticos
 - Todos os parâmetros em `R/00_setup.R`
@@ -362,7 +369,7 @@ Ambas as figuras seguem o padrão editorial da **Nature Communications / Cell Pr
 
 ---
 
-## � Testes
+## Testes
 
 ```r
 # Executar todos os testes
@@ -373,7 +380,7 @@ Os testes cobrem: validação da escala de expressão, extração de genes KEGG,
 
 ---
 
-## � Declaração de Uso de Inteligência Artificial
+## Declaração de Uso de Inteligência Artificial
 
 Em conformidade com a **Portaria CNPq nº 2.664/2026**, que dispõe sobre o uso de inteligência artificial em pesquisas científicas, declaramos que as seguintes ferramentas de IA foram utilizadas como suporte técnico e metodológico neste projeto:
 
@@ -396,13 +403,13 @@ Para o registro completo das tarefas assistidas por IA e respectivos métodos de
 
 ---
 
-## � Licença
+## Licença
 
 MIT License : veja o arquivo [LICENSE](LICENSE)
 
 ---
 
-## � Como citar
+## Como citar
 
 ```bibtex
 @software{santos2026thyroid,
@@ -420,7 +427,7 @@ Veja também `CITATION.cff` para metadados de citação estruturados.
 
 ---
 
-## � Referências
+## Referências
 
 1. Goldman MJ, Craft B, Hastie M, Repečka K, McDade F, Kamath A, Banerjee A, Luo Y, Rogers D, Brooks AN, Zhu J, Haussler D. Visualizing and interpreting cancer genomics data via the Xena platform. *Nature Biotechnology*. 2020;38(6):675-678. doi:[10.1038/s41587-020-0546-8](https://doi.org/10.1038/s41587-020-0546-8)
 
@@ -438,7 +445,7 @@ Veja também `CITATION.cff` para metadados de citação estruturados.
 
 ---
 
-## � Trilha de Auditoria do Código-Fonte (21/jun/2026)
+## Trilha de Auditoria do Código-Fonte (21/jun/2026)
 
 ### Correções críticas aplicadas
 
