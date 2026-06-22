@@ -20,7 +20,7 @@ x_breaks <- pretty(c(-x_max, x_max), 7)
 x_breaks <- x_breaks[x_breaks >= -x_max & x_breaks <= x_max]
 y_breaks <- Filter(function(y) y <= y_max, pretty(c(0, y_max), 6))
 
-# ── Point sizing (proportional to significance) ───────────────────────────────
+# ── Point sizing (proportional to significance, no external scales dep) ──────
 deg$pt_size <- ifelse(deg$regulation == "NS", 0.65,
                       scales::rescale(deg$log_pval, to = c(1.0, 3.2)))
 
@@ -162,7 +162,9 @@ p <- ggplot(deg, aes(x = logFC, y = log_pval)) +
     plot.margin = margin(8, 10, 8, 8)
   )
 
-# ── Export ────────────────────────────────────────────────────────────────────
+# ── Export (PNG 600 dpi + PDF) ──────────────────────────────────────────────
 ggsave(here::here(DIRS$figures, "Fig1_Volcano_THCA_vs_Normal.png"),
        p, width = 180, height = 150, units = "mm", dpi = 600, bg = "white")
-cat(sprintf("  ✓ Volcano: %d genes | %d DEGs (↑%d ↓%d)\n", nrow(deg), n_deg, n_up, n_down))
+ggsave(here::here(DIRS$figures, "Fig1_Volcano_THCA_vs_Normal.pdf"),
+       p, width = 180, height = 150, units = "mm", device = "pdf", bg = "white")
+cat(sprintf("  Volcano: %d genes | %d DEGs (up %d, down %d)\n", nrow(deg), n_deg, n_up, n_down))

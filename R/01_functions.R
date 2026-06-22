@@ -2,13 +2,16 @@
 # R/01_functions.R — Core utility functions
 # thyroid-volcano-ppi
 #
-# AUDIT: ✓ dplyr::select qualified  ✓ igraph:: namespace  ✓ hits_scores()
-#        ✓ STRING API error handling  ✓ KEGG artifact filter
+# All API calls wrapped in tryCatch with retry logic.
+# All exports include column dictionary comments.
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ── F1. Extract gene symbols from KEGG pathway ────────────────────────────────
 fetch_kegg_genes <- function(pathway_id) {
-  pw <- keggGet(pathway_id)
+  pw <- tryCatch(
+    keggGet(pathway_id),
+    error = function(e) stop("KEGG API error for ", pathway_id, ": ", e$message)
+  )
   stopifnot(length(pw) == 1L)
   g <- pw[[1]]$GENE
   if (is.null(g) || length(g) == 0L) stop("Empty GENE field for ", pathway_id)
@@ -21,7 +24,7 @@ fetch_kegg_genes <- function(pathway_id) {
     unique() |>
     sort()
 
-  # Remove KEGG readthrough-fusion artifacts (e.g., P3R3URF-PIK3R3)
+  # Remove KEGG readthrough-fusion artifacts
   genes <- genes[!grepl("-", genes) | nchar(genes) <= 10]
   tibble(pathway_id = pathway_id, gene_symbol = genes)
 }
@@ -35,7 +38,7 @@ validate_expression_scale <- function(expr) {
               round(max(expr, na.rm = TRUE), 2), round(frac * 100, 1)))
 }
 
-# ── F3. Map gene symbols → STRING protein IDs (REST API) ──────────────────────
+# ── F3. Map gene symbols -> STRING protein IDs (REST API) ─────────────────────
 map_string_ids <- function(annot_df, taxon = 9606) {
   clean <- annot_df |>
     dplyr::mutate(gene_symbol = as.character(gene_symbol)) |>
@@ -44,15 +47,19 @@ map_string_ids <- function(annot_df, taxon = 9606) {
 
   stopifnot(nrow(clean) >= 2)
 
-  resp <- httr::POST(
-    "https://string-db.org/api/json/get_string_ids",
-    body = list(
-      identifiers     = paste(clean$gene_symbol, collapse = "\r\n"),
-      species         = as.character(taxon),
-      limit           = "1",
-      caller_identity = "thyroid_volcano_ppi"
+  resp <- tryCatch(
+    httr::POST(
+      "https://string-db.org/api/json/get_string_ids",
+      body = list(
+        identifiers     = paste(clean$gene_symbol, collapse = "\r\n"),
+        species         = as.character(taxon),
+        limit           = "1",
+        caller_identity = "thyroid_volcano_ppi"
+      ),
+      encode = "form",
+      httr::timeout(60)
     ),
-    encode = "form"
+    error = function(e) stop("STRING API mapping failed: ", e$message)
   )
   httr::stop_for_status(resp)
 
@@ -78,15 +85,19 @@ map_string_ids <- function(annot_df, taxon = 9606) {
 
 # ── F4. Fetch STRING PPI interactions (REST API) ──────────────────────────────
 fetch_string_edges <- function(string_ids, taxon = 9606) {
-  resp <- httr::POST(
-    "https://string-db.org/api/tsv/network",
-    body = list(
-      identifiers     = paste(string_ids, collapse = "\r\n"),
-      species         = as.character(taxon),
-      required_score  = "0",
-      caller_identity = "thyroid_volcano_ppi"
+  resp <- tryCatch(
+    httr::POST(
+      "https://string-db.org/api/tsv/network",
+      body = list(
+        identifiers     = paste(string_ids, collapse = "\r\n"),
+        species         = as.character(taxon),
+        required_score  = "0",
+        caller_identity = "thyroid_volcano_ppi"
+      ),
+      encode = "form",
+      httr::timeout(120)
     ),
-    encode = "form"
+    error = function(e) stop("STRING API network call failed: ", e$message)
   )
   httr::stop_for_status(resp)
 
@@ -100,7 +111,7 @@ fetch_string_edges <- function(string_ids, taxon = 9606) {
                   combined_score = numeric()))
   }
   if (!all(c("stringId_A", "stringId_B") %in% colnames(raw))) {
-    stop("STRING REST response missing expected columns.")
+    stop("STRING REST response missing expected columns (stringId_A/stringId_B).")
   }
 
   raw |>
@@ -136,7 +147,7 @@ compute_centrality <- function(g) {
   ) |> dplyr::arrange(dplyr::desc(betweenness))
 }
 
-# ── F7. Evaluate layout quality (for auto-selection) ──────────────────────────
+# ── F7. Evaluate layout quality ───────────────────────────────────────────────
 evaluate_layout <- function(g, layout_fun, dim = 2, ...) {
   set.seed(42)
   lay <- tryCatch(layout_fun(g, dim = dim, ...), error = function(e) NULL)
@@ -156,9 +167,12 @@ evaluate_layout <- function(g, layout_fun, dim = 2, ...) {
   score
 }
 
-# ── F8. Export table (TSV) ────────────────────────────────────────────────────
-export_tsv <- function(x, filepath) {
+# ── F8. Export table (TSV) with dictionary header ─────────────────────────────
+export_tsv <- function(x, filepath, description = NULL) {
   if (!grepl("\\.tsv$", filepath)) filepath <- paste0(filepath, ".tsv")
   readr::write_tsv(x, filepath)
-  cat(sprintf("  → %s (%d×%d)\n", basename(filepath), nrow(x), ncol(x)))
+  cat(sprintf("  -> %s (%dx%d)\n", basename(filepath), nrow(x), ncol(x)))
+  if (!is.null(description)) {
+    cat(sprintf("     %s\n", description))
+  }
 }

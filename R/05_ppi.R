@@ -206,11 +206,15 @@ p_ppi <- p_ppi +
            label = paste0("Gene Hub (", n_hub_net, ")"),
            size = 3.5, hjust = 0, color = "black", family = FONT_FAM)
 
-# ── Export ────────────────────────────────────────────────────────────────────
+# ── Export (PNG 600 dpi + PDF) ──────────────────────────────────────────────
 ggsave(here::here(DIRS$figures, "Fig2_PPI_Network_THCA_DEGs.png"),
        p_ppi, width = 180, height = 180, units = "mm", dpi = 600, bg = "white")
-cat(sprintf("  ✓ PPI: %d nodes | %d edges | %d communities | %d hubs\n",
+ggsave(here::here(DIRS$figures, "Fig2_PPI_Network_THCA_DEGs.pdf"),
+       p_ppi, width = 180, height = 180, units = "mm", device = "pdf", bg = "white")
+cat(sprintf("  PPI: %d nodes | %d edges | %d communities | %d hubs\n",
             n_nodes, n_edges, n_comm, sum(cent$is_hub)))
+cat("  NOTE: Hubs are exploratory centrality metrics; they do not imply\n")
+cat("  therapeutic targets, druggability, or causal mechanisms.\n")
 
 # ── Tables ────────────────────────────────────────────────────────────────────
 export_tsv(mapped, here::here(DIRS$network, "N01_string_mapping.tsv"))

@@ -10,6 +10,10 @@
 *.Rproj
 .Renviron
 
+# ── Processed data (regenerated each run) ────────────────────────────────────
+data/processed/*
+data/string_cache/*
+
 # ── Logs (regenerated each run) ──────────────────────────────────────────────
 logs/*.log
 logs/session_info.txt
@@ -18,6 +22,11 @@ logs/session_info.txt
 renv/library/
 renv/staging/
 renv/sandbox/
+
+# ── Temp files ───────────────────────────────────────────────────────────────
+*.pdf.tmp
+*.png.tmp
+*.tmp
 
 # ── OS ───────────────────────────────────────────────────────────────────────
 .DS_Store

@@ -4,9 +4,9 @@
 # THCA Transcriptomic Analysis: differential expression (limma),
 # Volcano Plot, and STRING PPI network of DEGs.
 #
-# Two graphical outputs (PNG 600 dpi, Nature Communications standard):
-#   1. Fig1_Volcano_THCA_vs_Normal.png
-#   2. Fig2_PPI_Network_THCA_DEGs.png
+# Outputs (PNG 600 dpi + PDF, Nature Communications / Cell Press standard):
+#   1. Fig1_Volcano_THCA_vs_Normal.{png,pdf}
+#   2. Fig2_PPI_Network_THCA_DEGs.{png,pdf}
 #
 # Usage:
 #   Rscript run_pipeline.R
@@ -15,11 +15,10 @@
 # Repository: https://github.com/santosry/thyroid-volcano-ppi
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Detect project root
-if (!requireNamespace("here", quietly = TRUE))
-  install.packages("here", repos = "https://cloud.r-project.org")
-library(here)
-PROJECT_ROOT <- here::here()
+# ═══════════════════════════════════════════════════════════════════════════════
+# SETUP: project root, internet check, directories, packages, parameters
+# ═══════════════════════════════════════════════════════════════════════════════
+source(here::here("R", "00_setup.R"), local = FALSE)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # DATA FILE VERIFICATION
@@ -31,7 +30,7 @@ DOWNLOAD_SCRIPT <- file.path(PROJECT_ROOT, "scripts", "download_data.R")
 if (!file.exists(DATA_FILE)) {
   cat("\n")
   cat("╔══════════════════════════════════════════════════════════════╗\n")
-  cat("║  ⚠  DATA FILE NOT FOUND                                    ║\n")
+  cat("║  DATA FILE NOT FOUND                                       ║\n")
   cat("╠══════════════════════════════════════════════════════════════╣\n")
   cat("║                                                            ║\n")
   cat("║  The file 'data/raw/XENA_THCA.tsv' is required.            ║\n")
@@ -52,56 +51,70 @@ if (!file.exists(DATA_FILE)) {
   cat("║  c486b845ee2e750c3a9d2fc5145c8426                          ║\n")
   cat("╚══════════════════════════════════════════════════════════════╝\n\n")
 
-  # Attempt automatic download if the script exists
   if (file.exists(DOWNLOAD_SCRIPT)) {
     cat("Attempting automatic download via scripts/download_data.R...\n\n")
     tryCatch({
-      source(DOWNLOAD_SCRIPT)
+      source(DOWNLOAD_SCRIPT, local = FALSE)
     }, error = function(e) {
       cat("\nAutomatic download failed:", conditionMessage(e), "\n")
     })
   }
 
-  # Re-check after download attempt
   if (!file.exists(DATA_FILE)) {
     stop(
-      "\n❌ PIPELINE ABORTED: Data file missing.\n",
+      "\nPIPELINE ABORTED: Data file missing.\n",
       "   Expected path: ", DATA_FILE, "\n",
       "   Please download the file manually from Xena Browser and try again.\n",
       "   Full instructions in README.md\n"
     )
   } else {
-    cat("✓ Automatic download successful! Proceeding...\n\n")
+    cat("Automatic download successful! Proceeding...\n\n")
   }
 }
 
-# Validate minimum file size
 f_info <- file.info(DATA_FILE)
 if (f_info$size < 1000) {
-  stop("❌ Data file too small (", f_info$size,
+  stop("Data file too small (", f_info$size,
        " bytes). File may be corrupted.\n",
        "   Please re-download from Xena Browser.")
 }
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# INTERNET CONNECTIVITY CHECK (STRING, KEGG require internet)
+# ═══════════════════════════════════════════════════════════════════════════════
+if (!check_internet()) {
+  cat("\n")
+  cat("╔══════════════════════════════════════════════════════════════╗\n")
+  cat("║  WARNING: No internet connection detected.                  ║\n")
+  cat("║  STRING and KEGG API calls will fail.                       ║\n")
+  cat("║  Differential expression and Volcano Plot will still work.  ║\n")
+  cat("║  PPI Network requires internet.                             ║\n")
+  cat("╚══════════════════════════════════════════════════════════════╝\n\n")
+}
+
 cat("\n")
 cat("╔══════════════════════════════════════════════════════╗\n")
-cat("║  thyroid-volcano-ppi — THCA DEG + PPI Analysis      ║\n")
+cat("║  thyroid-volcano-ppi : THCA DEG + PPI Analysis      ║\n")
 cat("║  Output: Volcano Plot + PPI Network                  ║\n")
 cat("║  Standard: Nature Communications / Cell Press        ║\n")
 cat("╚══════════════════════════════════════════════════════╝\n\n")
 
 # ── Execute pipeline modules ─────────────────────────────────────────────────
-source(here::here("R", "00_setup.R"))     # Parameters, packages, colors, typography
-source(here::here("R", "01_functions.R")) # Core utility functions
-source(here::here("R", "02_import.R"))    # Data import & QC
-source(here::here("R", "03_deg.R"))       # Differential expression (limma)
-source(here::here("R", "04_volcano.R"))   # ★ Figure 1: Volcano Plot
-source(here::here("R", "05_ppi.R"))       # ★ Figure 2: PPI Network
+source(here::here("R", "01_functions.R"), local = FALSE)
+source(here::here("R", "02_import.R"),    local = FALSE)
+source(here::here("R", "03_deg.R"),       local = FALSE)
+source(here::here("R", "04_volcano.R"),   local = FALSE)
+source(here::here("R", "05_ppi.R"),       local = FALSE)
 
 # ── Session info ─────────────────────────────────────────────────────────────
 sink(file.path(DIRS$logs, "session_info.txt"))
 sessionInfo()
 sink()
+
+# ── renv snapshot reminder ────────────────────────────────────────────────────
+if (requireNamespace("renv", quietly = TRUE)) {
+  cat("\nTip: run renv::snapshot() to update renv.lock with current packages.\n")
+}
 
 # ── Final summary ────────────────────────────────────────────────────────────
 cat("\n")
@@ -109,9 +122,15 @@ cat("╔════════════════════════
 cat("║  PIPELINE COMPLETED SUCCESSFULLY                     ║\n")
 cat("╚══════════════════════════════════════════════════════╝\n\n")
 cat("Outputs:\n")
-cat("  ★ Fig1: Volcano Plot     → results/figures/Fig1_Volcano_THCA_vs_Normal.png\n")
-cat("  ★ Fig2: PPI Network      → results/figures/Fig2_PPI_Network_THCA_DEGs.png\n")
-cat("  Tables (7)               → results/tables/\n")
-cat("  Network metadata (4)     → results/network/\n")
-cat("  Session info             → logs/session_info.txt\n")
+cat("  Fig1: Volcano Plot     -> results/figures/Fig1_Volcano_THCA_vs_Normal.{png,pdf}\n")
+cat("  Fig2: PPI Network      -> results/figures/Fig2_PPI_Network_THCA_DEGs.{png,pdf}\n")
+cat("  Tables (7)             -> results/tables/\n")
+cat("  Network metadata (4)   -> results/network/\n")
+cat("  Session info           -> logs/session_info.txt\n")
+cat("\n")
+cat("DISCLAIMER: This pipeline generates hypotheses based on\n")
+cat("transcriptomic associations. It does not establish causality,\n")
+cat("therapeutic targets, or clinical recommendations. PPI hub\n")
+cat("proteins are identified by centrality metrics (exploratory);\n")
+cat("they do not imply biological validation or druggability.\n")
 cat("\n", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
