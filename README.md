@@ -363,9 +363,26 @@ Os testes cobrem: validação da escala de expressão, extração de genes KEGG,
 
 ---
 
-## 🤖 Uso de Inteligência Artificial
+## 🤖 Declaração de Uso de Inteligência Artificial
 
-Inteligência Artificial (Grok, xAI) foi utilizada como ferramenta de suporte metodológico, computacional e de documentação neste projeto, incluindo: otimização de código R, auditoria de namespaces, geração de documentação estruturada e sugestões de melhores práticas de reprodutibilidade. **Nenhuma conclusão científica foi derivada por IA.** Toda a responsabilidade pelos resultados, análises, interpretações biológicas e conteúdo final permanece exclusivamente com os autores humanos. Para detalhes completos, veja a tabela `S4_ai_assisted_tasks.tsv`.
+Em conformidade com a **Portaria CNPq nº 2.664/2026**, que dispõe sobre o uso de inteligência artificial em pesquisas científicas, declaramos que as seguintes ferramentas de IA foram utilizadas como suporte técnico e metodológico neste projeto:
+
+| Ferramenta de IA | Desenvolvedor | Tarefas realizadas |
+|------------------|---------------|--------------------|
+| **DeepSeek-v4-pro** | DeepSeek | Otimização de código R, auditoria de namespaces, revisão de funções estatísticas |
+| **Codex** | OpenAI | Geração e depuração de scripts R, suporte à documentação técnica |
+| **ChatGPT 5.5** | OpenAI | Revisão textual, estruturação de documentação, sugestões de reprodutibilidade |
+| **Grok** | xAI | Análise exploratória, prototipagem de visualizações, suporte metodológico |
+
+**Em todos os casos**, a participação humana foi integral e soberana:
+- Todo código gerado por IA foi revisado linha por linha pelos autores
+- Todas as análises estatísticas foram validadas manualmente
+- As interpretações biológicas são de responsabilidade exclusiva dos autores humanos
+- As figuras finais passaram por inspeção visual e aprovação dos autores
+
+**Nenhuma conclusão científica foi derivada por IA.** As ferramentas listadas atuaram exclusivamente como assistentes técnicos, sem autonomia decisória sobre métodos, resultados ou interpretações.
+
+Para o registro completo das tarefas assistidas por IA e respectivos métodos de validação humana, consulte a tabela `S4_ai_assisted_tasks.tsv`.
 
 ---
 

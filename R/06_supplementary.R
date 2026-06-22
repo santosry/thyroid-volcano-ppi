@@ -97,16 +97,22 @@ write_sup(s3, "S3_pipeline_audit_trail.tsv")
 cat("  S3: Audit trail —", nrow(s3), "steps\n")
 
 # ── S4: AI-Assisted Tasks ─────────────────────────────────────────────────────
+# Declaração conforme Portaria CNPq nº 2.664/2026
 s4 <- tibble::tribble(
-  ~task,                       ~tool,         ~human_participation,              ~validation_method,              ~status,
-  "R code auditing",           "Grok (xAI)",  "Line-by-line review",             "Manual pipeline execution",     "Compliant",
-  "Namespace corrections",     "Grok (xAI)",  "Verification and approval",       "Zero-warning execution",        "Compliant",
-  "Volcano Plot optimization", "Grok (xAI)",  "Design review and final approval","Visual inspection + parameters","Compliant",
-  "PPI Network optimization",  "Grok (xAI)",  "Design review and final approval","Visual inspection + metrics",   "Compliant",
-  "Documentation (README)",    "Grok (xAI)",  "Writing, review, and approval",   "Author review",                 "Compliant",
-  "Dockerfile",                "Grok (xAI)",  "Review and testing",              "Container build and execution", "Compliant",
-  "Unit tests",                "Grok (xAI)",  "Review and approval",             "testthat::test_dir()",          "Compliant",
-  "Supplementary tables",      "Grok (xAI)",  "Content review",                  "Cross-referencing",             "Compliant"
+  ~task,                       ~tool,              ~human_participation,              ~validation_method,              ~status,
+  "R code auditing",           "DeepSeek-v4-pro",  "Line-by-line review",             "Manual pipeline execution",     "Compliant",
+  "Namespace corrections",     "DeepSeek-v4-pro",  "Verification and approval",       "Zero-warning execution",        "Compliant",
+  "Statistical function review","DeepSeek-v4-pro", "Methodological validation",       "limma documentation cross-check","Compliant",
+  "Script generation/debugging","Codex",           "Code review and testing",         "Pipeline execution validation", "Compliant",
+  "Technical documentation",   "Codex",            "Author review and editing",       "Manual proofreading",           "Compliant",
+  "Textual review",            "ChatGPT 5.5",      "Writing, review, and approval",   "Author review",                 "Compliant",
+  "Documentation structure",   "ChatGPT 5.5",      "Content organization review",     "Cross-referencing validation",  "Compliant",
+  "Reproducibility suggestions","ChatGPT 5.5",     "Implementation review",           "renv + Docker validation",      "Compliant",
+  "Exploratory analysis",      "Grok (xAI)",       "Review and approval",             "Statistical re-validation",     "Compliant",
+  "Volcano Plot prototyping",  "Grok (xAI)",       "Design review and final approval","Visual inspection + parameters","Compliant",
+  "PPI Network prototyping",   "Grok (xAI)",       "Design review and final approval","Visual inspection + metrics",   "Compliant",
+  "Methodological support",    "Grok (xAI)",       "Review and approval",             "Protocol cross-check",          "Compliant",
+  "Supplementary tables",      "Grok (xAI)",       "Content review",                  "Cross-referencing",             "Compliant"
 )
 
 write_sup(s4, "S4_ai_assisted_tasks.tsv")
