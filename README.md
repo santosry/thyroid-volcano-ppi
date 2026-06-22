@@ -14,18 +14,6 @@
 
 ---
 
-## Contents
-
-- [For Healthcare Professionals](#for-healthcare-professionals) : Complete step-by-step guide
-- [Study Design](#study-design) : Methods, data sources, and analysis parameters
-- [Limitations](#limitations) : What this analysis does NOT prove
-- [Pipeline Structure](#pipeline-structure) : Script organization
-- [How to Run](#how-to-run) : Commands to execute
-- [Outputs and Interpretation](#outputs-and-interpretation) : Generated figures and tables
-- [References](#references) : Full citations
-
----
-
 ## For Healthcare Professionals
 
 ### What this project does
