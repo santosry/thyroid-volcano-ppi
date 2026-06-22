@@ -9,7 +9,7 @@
 
 ---
 
-> **📖 Este README foi escrito para biólogos e profissionais da saúde.**
+> **📖 Este README foi escrito para profissionais da saúde e biólogos.**
 > Se você nunca usou R ou GitHub na vida, não se preocupe — cada passo está explicado abaixo.
 > As seções mais técnicas estão no final do documento (em inglês).
 
