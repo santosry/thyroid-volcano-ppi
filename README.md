@@ -21,10 +21,29 @@ O carcinoma de tireoide apresenta alterações transcriptômicas em genes da via
 
 ### Resultados
 
-| Figura | Descrição |
-|--------|-----------|
-| **Figura 1: Volcano Plot** | 29 genes diferencialmente expressos na via SHT (9 superexpressos, 20 subexpressos). MYH7, DIO3, MYH6 e ATP2A1 entre os mais suprimidos; CCND1 e RXRG entre os mais superexpressos |
-| **Figura 2: Rede PPI** | 24 genes com pelo menos uma interação STRING (escore >= 700). Rede conectada final com 8 proteínas em 2 módulos funcionais. PRKCA como gene de maior centralidade (grau = 5, betweenness = 0,476) |
+**Expressão diferencial.** Dos 119 genes da via de sinalização do hormônio tireoidiano (KEGG hsa04919) analisados, 29 (24,4%) foram diferencialmente expressos entre carcinoma de tireoide (THCA, n = 504) e tecido tireoidiano normal (GTEx, n = 279), considerando |log2FC| > 1 e FDR < 0,05. Destes, 9 genes encontram-se superexpressos e 20 subexpressos no tumor.
+
+| Gene | log2FC | FDR | Regulação | Função biológica (STRING) |
+|------|--------|-----|-----------|---------------------------|
+| MYH7 | −5,59 | 7,3×10⁻²²⁴ | Subexpresso | Cadeia pesada da miosina-7; contração muscular, atividade ATPase dependente de actina |
+| RXRG | +5,28 | 3,3×10⁻¹⁴⁹ | Superexpresso | Receptor nuclear; mecanismos de regulação transcricional |
+| DIO3 | −4,97 | 4,4×10⁻¹⁶⁸ | Subexpresso | Metabolismo de hormônios tireoidianos; inativação de iodotironinas |
+| MYH6 | −4,42 | 1,5×10⁻¹⁵⁷ | Subexpresso | Cadeia pesada da miosina-6 (alfa); isoforma predominante no átrio cardíaco |
+| ATP2A1 | −2,83 | 1,3×10⁻¹⁶⁹ | Subexpresso | Transporte de íons cálcio; homeostase intracelular de cálcio |
+| CCND1 | +2,65 | 1,0×10⁻²¹⁴ | Superexpresso | Regulação do ciclo celular (ciclina D1) |
+
+**Genes adicionais com elevada significância** incluem DIO1 (log2FC = −2,60; FDR = 2,4×10⁻²⁷), PLCD3 (log2FC = +2,38; FDR = 1,2×10⁻⁹⁵), PLN (log2FC = −2,29; FDR = 5,9×10⁻⁹⁷), ATP1A2 (log2FC = −2,30; FDR = 1,2×10⁻⁸⁵), KAT2A (log2FC = −1,80; FDR = 6,1×10⁻¹³⁶), FXYD2 (log2FC = −1,74; FDR = 1,9×10⁻⁷⁵), TBC1D4 (log2FC = −1,64; FDR = 2,1×10⁻⁹⁴), STAT1 (log2FC = +1,57; FDR = 5,8×10⁻⁷³) e PLCD4 (log2FC = −1,53; FDR = 2,9×10⁻⁷¹). A lista completa dos 29 DEGs está disponível em `results/tables/T03_deg_full_results.tsv`.
+
+**Rede PPI.** A consulta à base STRING v12.0 (Homo sapiens, taxon 9606) mapeou todos os 29 DEGs, dos quais 24 apresentaram pelo menos uma interação proteína-proteína com escore combinado ≥ 700 (alta confiança). Cinco genes não formaram interações acima desse limiar: RXRG, DIO1, MED13, TBC1D4 e PFKFB2.
+
+A rede conectada final reteve 8 proteínas organizadas em 2 módulos funcionais detectados pelo algoritmo walktrap, com 12 arestas, modularidade 0,109, coeficiente de agrupamento 0,656 e densidade 0,429. Os 21 DEGs restantes não integraram a rede conectada, seja por ausência de interações de alta confiança ou por formarem componentes desconexos de pequeno tamanho.
+
+| Módulo | Proteínas | Função predominante |
+|--------|-----------|---------------------|
+| **Módulo 1** (6 proteínas) | PRKCA, PRKCG, PLCG1, PLCD3, PLCD4, PIK3R2 | Transdução de sinais intracelulares mediada por fosfolipases C e proteínas quinase C |
+| **Módulo 2** (2 proteínas) | ACTG1, ITGAV | Organização estrutural do citoesqueleto de actina e interações célula-matriz |
+
+**Centralidade.** PRKCA (Proteína Quinase C Alfa) destacou-se como gene de maior centralidade na rede (grau = 5, betweenness = 0,476, closeness = 8,52×10⁻⁴, hub score = 1,000), atuando como único elo entre os dois módulos por meio da interação PRKCA–ACTG1 (escore STRING = 918). Os demais hubs identificados foram PLCG1 (grau = 4, betweenness = 0,286), PLCD4 (grau = 4, betweenness = 0,095) e PRKCG (grau = 4, betweenness = 0), todos restritos ao Módulo 1. PLCD3 (grau = 3) não atingiu os critérios de hub. As métricas completas de centralidade estão em `results/network/N03_centrality_metrics.tsv`.
 
 ---
 
