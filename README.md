@@ -58,6 +58,10 @@ O carcinoma de tireoide apresenta alterações transcriptômicas em genes da via
 
 ## Como este estudo foi conduzido
 
+### Ambiente computacional
+
+Todas as análises foram executadas em **R versão 4.6.0** (2026-04-26, "Jitterbug Madness") utilizando **Visual Studio Code versão 1.125** como ambiente de desenvolvimento integrado (IDE), com suporte das extensões R e Git. O `sessionInfo()` completo de cada execução é registrado em `logs/session_info.txt`.
+
 ### Desenho do estudo
 
 | Etapa | Método | Ferramenta |
@@ -97,9 +101,9 @@ O carcinoma de tireoide apresenta alterações transcriptômicas em genes da via
 
 ### Requisitos
 
-- R >= 4.1
+- R >= 4.1 (este estudo utilizou R v4.6.0)
 - Conexão com internet (para STRING e KEGG)
-- VS Code com extensão R (recomendado) ou RStudio
+- VS Code com extensão R (este estudo utilizou VS Code v1.125; RStudio também compatível)
 
 ### Passo a passo
 

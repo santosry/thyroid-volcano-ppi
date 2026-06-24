@@ -151,10 +151,12 @@ KEGG genes are **not** used to filter DEGs; all genes passing the statistical th
 
 ## 8. Software Versions
 
+**Development environment:** R v4.6.0 (2026-04-26, "Jitterbug Madness") executed via Visual Studio Code v1.125 with R extension on Windows 11 x64.
+
 See `logs/session_info.txt` for complete version information after each run.
 
 Key dependencies:
-- R ≥ 4.1
+- R ≥ 4.1 (tested on v4.6.0)
 - limma ≥ 3.56
 - ggplot2 ≥ 3.5
 - ggraph ≥ 2.1
