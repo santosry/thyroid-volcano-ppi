@@ -340,27 +340,27 @@ MIT License. Veja [LICENSE](LICENSE).
 
 ## Referências
 
-1. Lee K, Anastasopoulou C, Chandran C, Cassaro S. Thyroid Cancer. In: *StatPearls* [Internet]. Treasure Island (FL): StatPearls Publishing; 2023. Disponível em: https://www.ncbi.nlm.nih.gov/books/NBK45929/
+1. LEE, K.; ANASTASOPOULOU, C.; CHANDRAN, C.; CASSARO, S. Thyroid Cancer. In: STATPEARLS [Internet]. Treasure Island (FL): StatPearls Publishing, 2023. Disponível em: https://www.ncbi.nlm.nih.gov/books/NBK45929/. Acesso em: 24 jun. 2026.
 
-2. Tsai WH, Zeng YH, Lee CC, Chien MN, Liu SC, Chien KL, Cheng SP, Tseng PJ, Tsai MC. Association between thyroid cancer and cardiovascular disease: A meta-analysis. *Frontiers in Cardiovascular Medicine*. 2023. DOI: 10.3389/fcvm.2023.1075842.
+2. TSAI, W. H. et al. Association between thyroid cancer and cardiovascular disease: a meta-analysis. *Frontiers in Cardiovascular Medicine*, v. 10, 2023. DOI: 10.3389/fcvm.2023.1075842.
 
-3. Zhang B, Chen Z, Wang Y, Fan G, He X. Integrated bioinformatics analysis for the identification of key genes and signaling pathways in thyroid carcinoma. *Experimental and Therapeutic Medicine*. 2021;21(3):233. DOI: 10.3892/etm.2021.9664.
+3. ZHANG, B. et al. Integrated bioinformatics analysis for the identification of key genes and signaling pathways in thyroid carcinoma. *Experimental and Therapeutic Medicine*, v. 21, n. 3, 2021. DOI: 10.3892/etm.2021.9664.
 
-4. Fu MR, Kurnat-Thoma E, Starkweather A, Henderson WA, Cashion AK, Williams JK, Katapodi MC, Reuter-Rice K, Hickey KT, Barcelona de Mendoza V, Calzone K, Conley YP, Anderson CM, Lyon DE, Weaver MT, Shiao PK, Constantino RE, Wung S-F, Hammer MJ, Voss JG, Coleman B. Precision health: a nursing perspective. *International Journal of Nursing Sciences*. 2020;7(1):5–12. DOI: 10.1016/j.ijnss.2019.12.008.
+4. FU, M. R. et al. Precision health: a nursing perspective. *International Journal of Nursing Sciences*, v. 7, n. 1, p. 5-12, 2020. DOI: 10.1016/j.ijnss.2019.12.008.
 
-5. Goldman MJ et al. Visualizing and interpreting cancer genomics data via the Xena platform. *Nature Biotechnology*. 2020;38(6):675-678.
+5. GOLDMAN, M. J. et al. Visualizing and interpreting cancer genomics data via the Xena platform. *Nature Biotechnology*, v. 38, n. 6, p. 675-678, 2020. DOI: 10.1038/s41587-020-0546-8.
 
-6. Ritchie ME et al. limma powers differential expression analyses for RNA-sequencing and microarray studies. *Nucleic Acids Research*. 2015;43(7):e47.
+6. RITCHIE, M. E. et al. limma powers differential expression analyses for RNA-sequencing and microarray studies. *Nucleic Acids Research*, v. 43, n. 7, e47, 2015. DOI: 10.1093/nar/gkv007.
 
-7. Szklarczyk D et al. The STRING database in 2023. *Nucleic Acids Research*. 2023;51(D1):D638-D646.
+7. SZKLARCZYK, D. et al. The STRING database in 2023: protein-protein association networks and functional enrichment analyses for any sequenced genome of interest. *Nucleic Acids Research*, v. 51, n. D1, p. D638-D646, 2023. DOI: 10.1093/nar/gkac1000.
 
-8. Cancer Genome Atlas Research Network. Integrated genomic characterization of papillary thyroid carcinoma. *Cell*. 2014;159(3):676-690.
+8. CANCER GENOME ATLAS RESEARCH NETWORK. Integrated genomic characterization of papillary thyroid carcinoma. *Cell*, v. 159, n. 3, p. 676-690, 2014. DOI: 10.1016/j.cell.2014.09.050.
 
-9. Kanehisa M et al. KEGG for taxonomy-based analysis of pathways and genomes. *Nucleic Acids Research*. 2023;51(D1):D587-D592.
+9. KANEHISA, M. et al. KEGG for taxonomy-based analysis of pathways and genomes. *Nucleic Acids Research*, v. 51, n. D1, p. D587-D592, 2023. DOI: 10.1093/nar/gkac963.
 
-10. Csardi G et al. igraph: Network Analysis and Visualization. R package version 2.0.3. CRAN; 2024.
+10. CSARDI, G. et al. *igraph*: network analysis and visualization. Version 2.0.3. [Software]. CRAN, 2024. Disponível em: https://CRAN.R-project.org/package=igraph. Acesso em: 24 jun. 2026.
 
-11. Pedersen TL. ggraph: An Implementation of Grammar of Graphics for Graphs and Networks. R package version 2.2.1. CRAN; 2024.
+11. PEDERSEN, T. L. *ggraph*: an implementation of grammar of graphics for graphs and networks. Version 2.2.1. [Software]. CRAN, 2024. Disponível em: https://CRAN.R-project.org/package=ggraph. Acesso em: 24 jun. 2026.
 
 ---
 
