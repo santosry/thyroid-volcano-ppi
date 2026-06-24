@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "thyroid-volcano-ppi: Transcriptomic Alterations in Thyroid Hormone Signaling Pathway — Differential Expression and PPI Network in Thyroid Carcinoma (THCA)"
+title: "Analise Transcriptomica da Via de Sinalizacao do Hormonio Tireoidiano no Carcinoma de Tireoide e Potenciais Implicacoes para a Enfermagem de Precisao"
 type: software
 authors:
   - given-names: "Letícia Maria Dias"
@@ -29,6 +29,7 @@ keywords:
   - "limma"
   - "bioinformatics"
   - "reproducible research"
+  - "precision nursing"
 license: MIT
 version: "3.1.0"
 date-released: "2026-06-24"

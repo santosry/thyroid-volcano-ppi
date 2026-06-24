@@ -1,6 +1,6 @@
 # thyroid-volcano-ppi
 
-**Análise de Expressão Diferencial e Rede de Interação Proteína-Proteína no Carcinoma de Tireoide (THCA)**
+**Análise Transcriptômica da Via de Sinalização do Hormônio Tireoidiano no Carcinoma de Tireoide e Potenciais Implicações para a Enfermagem de Precisão**
 
 [![R >= 4.1](https://img.shields.io/badge/R-%E2%89%A5%204.1-blue)](https://www.r-project.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
@@ -10,7 +10,7 @@
 
 ---
 
-> **Hipótese científica "lockada":** O carcinoma de tireoide apresenta alterações transcriptômicas na via de sinalização dos hormônios tireoidianos que envolvem genes com funções reconhecidas na biologia cardiovascular. Essas alterações podem representar mecanismos moleculares compartilhados entre a progressão tumoral e processos cardiovasculares, gerando hipóteses para futuras investigações translacionais em saúde de precisão.
+> **Hipótese lockada:** O carcinoma de tireoide apresenta alterações transcriptômicas em genes da via de sinalização do hormônio tireoidiano, refletindo processos moleculares associados à biologia tumoral. A identificação desses genes e de suas interações proteicas pode contribuir para a geração de hipóteses biológicas relevantes para futuras investigações em oncologia molecular e enfermagem de precisão.
 
 ---
 
@@ -29,7 +29,7 @@ O foco é a via de sinalização dos hormônios tireoidianos (KEGG hsa04919, 119
 |-----------|-------------|
 | Não estabelece causalidade | Associação transcriptômica ≠ relação causal |
 | Não valida experimentalmente | Sem PCR, Western blot ou ensaios funcionais |
-| Não analisa tecido cardíaco | Inferências cardiovasculares são hipotéticas |
+| Não analisa tecido cardíaco | Inferências sobre outros tecidos são hipotéticas |
 | Não corrige batch effects TCGA-GTEx | Comparação entre coortes distintas requer cautela |
 | Não demonstra função sistêmica | Expressão tumoral ≠ função endócrina sistêmica |
 | Hubs são exploratórios | Centralidade de rede ≠ alvo terapêutico validado |
@@ -46,7 +46,7 @@ O foco é a via de sinalização dos hormônios tireoidianos (KEGG hsa04919, 119
 ### Principais achados
 
 - **PRKCA** é o hub central, conectando módulos de sinalização intracelular (PLCG1, PLCD3, PLCD4, PRKCG) e organização estrutural (ACTG1, ITGAV)
-- Genes com funções cardiovasculares conhecidas (MYH6, MYH7, PLN, ATP2A1) aparecem suprimidos no tumor — um achado que gera hipóteses, mas requer validação
+- Genes com funções descritas em diversos tecidos (MYH6, MYH7, PLN, ATP2A1) aparecem suprimidos no tumor — um achado que gera hipóteses, mas requer validação
 - A rede PPI revela dois módulos funcionalmente coerentes, com PRKCA como elo topológico
 
 ### PRKCA: o achado mais robusto
@@ -54,7 +54,7 @@ O foco é a via de sinalização dos hormônios tireoidianos (KEGG hsa04919, 119
 PRKCA (Proteína Quinase C Alfa) destaca-se por:
 1. Ser o gene hub com maior centralidade (betweenness = 0,476)
 2. Conectar os dois módulos funcionais da rede
-3. Possuir relevância oncológica e cardiovascular documentada
+3. Possuir relevância biológica documentada em processos de sinalização celular
 4. Apresentar plausibilidade biológica como mediador de sinalização
 
 ---
@@ -199,7 +199,7 @@ Todos os resultados estão na pasta `results/`:
 
 4. **Hubs exploratórios:** Proteínas hub são definidas por métricas de centralidade de rede. Não devem ser interpretadas como alvos terapêuticos ou biomarcadores sem validação adicional.
 
-5. **Inferência cardiovascular:** Genes com funções cardíacas conhecidas (MYH6, MYH7, PLN, ATP2A1) aparecem alterados no tecido tumoral tireoidiano. Isso **não** demonstra disfunção cardíaca nem eixo tireoide-coração.
+5. **Inferência tecidual:** Genes com funções conhecidas em tecidos específicos (músculo cardíaco, músculo esquelético) aparecem alterados no tecido tumoral tireoidiano. Isso **não** demonstra disfunção nesses tecidos nem relação causal.
 
 6. **Generalização:** Resultados aplicam-se ao contexto específico de THCA com dados TCGA/GTEx. Extrapolação para outros subtipos histológicos requer cautela.
 
@@ -437,7 +437,7 @@ Principais correções aplicadas (v3.1.0): reformulação da hipótese, remoçã
 | 10 | `04_volcano.R` / `05_ppi.R` | Sem exportação PDF | Adicionado PDF vetorial |
 | 11 | `run_pipeline.R` | Sem disclaimer de causalidade | Adicionado ao final do pipeline |
 | 12 | `05_ppi.R` | Hubs sem ressalva interpretativa | Adicionado aviso sobre natureza exploratória |
-| 13 | `resumo_expandido_tireoide_2026.docx` | Hipótese "eixo tireoide-coração" não suportada | Reformulada para hipótese "lockada" |
+| 13 | `resumo_expandido_tireoide_2026.docx` | Hipótese com extrapolação cardiovascular | Reformulada para escopo transcriptômico lockado | |
 | 14 | `resumo_expandido_tireoide_2026.docx` | Alegações causais sem suporte | Substituídas por linguagem geradora de hipóteses |
 | 15 | `resumo_expandido_tireoide_2026.docx` | IA listada na metodologia | Removida; pipeline e scripts reprodutíveis citados |
 | 16 | `resumo_expandido_tireoide_2026.docx` | Interpretação excessiva de DIO1/DIO3/MYH6/MYH7 | Limitada ao escopo transcriptômico local |
