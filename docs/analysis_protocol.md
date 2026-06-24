@@ -2,6 +2,10 @@
 
 ## THCA Transcriptomic Analysis — Volcano Plot & PPI Network
 
+> **Study type:** Exploratory, hypothesis-generating
+> **Scope:** Differential expression + PPI network of KEGG hsa04919 pathway genes
+> **Limitation:** TCGA vs GTEx comparison without batch effect correction
+
 ---
 
 ## 1. Data Source
@@ -11,10 +15,17 @@ TCGA THCA + GTEx Thyroid gene expression RNA-seq (TOIL recompute pipeline)
 
 - URL: https://xenabrowser.net/?bookmark=c486b845ee2e750c3a9d2fc5145c8426
 - Gene expression values: log₂(RSEM expected_count + 1), upper quartile normalized
-- Samples: TCGA Thyroid Carcinoma (THCA, n ≈ 568) + GTEx normal thyroid (n ≈ 215)
-- Download date: April 2026
+- Samples: TCGA Thyroid Carcinoma (THCA, n = 504) + GTEx normal thyroid (n = 279)
+- Total: 783 samples
+- Download date: June 2026
 
 **Reference**: Goldman MJ et al. (2020) *Nature Biotechnology* 38:675–678.
+
+### 1.1 Known Limitations
+
+⚠️ **TCGA-GTEx batch effects:** Tumor and normal samples come from different cohorts with distinct sequencing protocols, demographic profiles, and processing pipelines. No batch effect correction (e.g., ComBat, RUVseq) is applied. Observed differential expression may partially reflect technical rather than biological variation. This limitation is explicitly stated in the manuscript and README.
+
+⚠️ **Cellular composition:** Expression differences may reflect differences in cell-type composition between tumor and normal tissue rather than transcriptional regulation per se. Deconvolution analysis is not performed.
 
 ---
 
@@ -150,3 +161,12 @@ Key dependencies:
 - igraph ≥ 1.5
 - STRING v12.0 (REST API)
 - KEGG (REST API via KEGGREST)
+
+## 9. Audit Trail
+
+| Date | Version | Changes |
+|------|---------|---------|
+| 2026-06-21 | v3.0.0 | Initial pipeline with volcano + PPI |
+| 2026-06-24 | v3.1.0 | Scientific audit: hypothesis reformulation, limitations documentation, PRKCA focus |
+
+Full audit report: `AUDIT_REPORT.md`

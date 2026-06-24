@@ -32,7 +32,7 @@ THRESHOLD <- list(
 KEGG_ID       <- "hsa04919"   # Thyroid hormone signaling pathway
 STRING_TAXON  <- 9606         # Homo sapiens
 STRING_V      <- "12.0"
-PIPELINE_VERSION <- "3.0.0"
+PIPELINE_VERSION <- "3.1.0"
 
 # ── Internet connectivity helper ──────────────────────────────────────────────
 check_internet <- function(timeout = 5) {
@@ -68,6 +68,7 @@ REQUIRED_PKGS <- c(
   "httr", "jsonlite"
 )
 
+# ── Package configuration ─────────────────────────────────────────────────────
 BIOC_PKGS <- c("limma", "KEGGREST", "org.Hs.eg.db", "AnnotationDbi")
 
 for (pkg in REQUIRED_PKGS) {
@@ -123,7 +124,10 @@ cat("thyroid-volcano-ppi v", PIPELINE_VERSION, "\n")
 cat("KEGG:", KEGG_ID, "| STRING v", STRING_V, "\n")
 cat("Root:", PROJECT_ROOT, "\n")
 cat(format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
-cat("═══════════════════════════════════════════\n\n")
+cat("═══════════════════════════════════════════\n")
+cat("NOTE: Exploratory study. No batch correction applied.\n")
+cat("      TCGA vs GTEx comparison requires cautious interpretation.\n")
+cat("      See AUDIT_REPORT.md for full limitations.\n\n")
 
 # ── renv lockfile reminder ────────────────────────────────────────────────────
 if (requireNamespace("renv", quietly = TRUE)) {

@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "thyroid-volcano-ppi: Differential Expression and PPI Network Analysis in Thyroid Carcinoma (THCA)"
+title: "thyroid-volcano-ppi: Transcriptomic Alterations in Thyroid Hormone Signaling Pathway — Differential Expression and PPI Network in Thyroid Carcinoma (THCA)"
 type: software
 authors:
   - given-names: "Letícia Maria Dias"
@@ -30,5 +30,5 @@ keywords:
   - "bioinformatics"
   - "reproducible research"
 license: MIT
-version: "3.0.0"
-date-released: "2026-06-22"
+version: "3.1.0"
+date-released: "2026-06-24"

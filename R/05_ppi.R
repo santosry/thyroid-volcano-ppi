@@ -8,7 +8,7 @@
 #        excellent spatial separation, minimal edge crossings.
 # ═══════════════════════════════════════════════════════════════════════════════
 
-cat("\n── M4: PPI Network ──\n")
+cat("\n── M3: PPI Network ──\n")
 
 if (length(deg_genes) < 2) stop("Need ≥2 DEGs for PPI network.")
 cat(sprintf("  DEGs: %d (↑%d ↓%d)\n", length(deg_genes), length(up_genes), length(down_genes)))
@@ -47,8 +47,11 @@ cat(sprintf("  Network: %d nodes, %d edges\n", n_nodes, n_edges))
 
 # ── Centrality metrics ────────────────────────────────────────────────────────
 cent <- compute_centrality(g_cc)
-hub_th_bet <- quantile(cent$betweenness[cent$betweenness > 0], 0.70, na.rm = TRUE)
-cent$is_hub <- (cent$betweenness >= hub_th_bet & cent$degree >= 2) | cent$degree >= 3
+# Hub criterion: betweenness >= 75th percentile of non-zero values AND degree >= 2,
+# OR degree >= 4 (highly connected nodes in small networks may have low betweenness)
+hub_th_bet <- quantile(cent$betweenness[cent$betweenness > 0], 0.75, na.rm = TRUE)
+if (is.na(hub_th_bet) || hub_th_bet <= 0) hub_th_bet <- 0.01
+cent$is_hub <- (cent$betweenness >= hub_th_bet & cent$degree >= 2) | cent$degree >= 4
 cent$is_hub[is.na(cent$is_hub)] <- FALSE
 cat(sprintf("  Hubs: %d\n", sum(cent$is_hub)))
 

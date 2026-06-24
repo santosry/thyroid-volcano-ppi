@@ -8,20 +8,20 @@ All figures follow the visual guidelines of Cell Press journals (Cell, Cell Repo
 
 | Element | Hex Code | Description |
 |---------|----------|-------------|
-| Upregulated | `#B02525` | Dark vermilion — genes upregulated in THCA |
-| Downregulated | `#1B5F8C` | Dark steel blue — genes downregulated in THCA |
+| Upregulated | `#4477AA` | Medium blue — genes upregulated in THCA |
+| Downregulated | `#AA4488` | Magenta — genes downregulated in THCA |
 | Not Significant | `#C8C8C8` | Light grey — non-DE genes |
 | PPI Edges | `#E0E0E0` | Very light grey — network edges |
 | Highlight Border | `#222222` | Near-black — hub protein borders |
 
 ### Typography
 - **Family**: Sans-serif (Arial/Helvetica)
-- **Base size**: 9pt
-- **Labels**: 2.5pt italic for gene symbols
+- **Base size**: 14pt
+- **Labels**: 5.2pt italic for gene symbols
 
 ### Dimensions
 - **Volcano Plot**: 180 × 150 mm (double column)
-- **PPI Network**: 180 × 165 mm (double column)
+- **PPI Network**: 180 × 180 mm (double column)
 - **Resolution**: 600 dpi (PNG)
 
 ### Export Formats
@@ -38,7 +38,7 @@ All figures follow the visual guidelines of Cell Press journals (Cell, Cell Repo
 **Content**:
 - X-axis: log₂ fold change (THCA / Normal)
 - Y-axis: -log₁₀ adjusted p-value
-- Points: genes colored by regulation status
+- Points: genes colored by regulation status (blue = upregulated, magenta = downregulated, grey = NS)
 - Threshold lines: |log₂FC| = 1.0 (vertical dashed), FDR = 0.05 (horizontal dashed)
 - Labels: top 15 DEGs by |log₂FC| + top 5 KEGG pathway DEGs by significance
 - Highlight: KEGG hsa04919 pathway genes with open ring
@@ -56,10 +56,10 @@ All figures follow the visual guidelines of Cell Press journals (Cell, Cell Repo
 **File**: `Fig2_PPI_Network_THCA_DEGs.{png,pdf,svg}`
 
 **Content**:
-- Layout: `nicely` (optimal force-directed for biological networks)
+- Layout: Fruchterman-Reingold (force-directed)
 - Nodes: filled circles, sized by degree centrality
 - Node colors: regulation-based (vermilion = Up, blue = Down)
-- Hub nodes: dark border highlight (top 25% betweenness + degree ≥ 2)
+- Hub nodes: thick dark border highlight (betweenness ≥ 70th percentile + degree ≥ 2, or degree ≥ 3)
 - Edges: thin light grey, width proportional to STRING combined_score
 - Labels: hub proteins + KEGG pathway genes only
 - Legend: inset annotation (upper-left)

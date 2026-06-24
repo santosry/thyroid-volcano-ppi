@@ -8,7 +8,7 @@
 #        large ggrepel labels with leader lines, compact right-side legend.
 # ═══════════════════════════════════════════════════════════════════════════════
 
-cat("\n── M3: Volcano Plot ──\n")
+cat("\n── M4: Volcano Plot (hubs from PPI) ──\n")
 
 deg$pval_plot <- pmax(deg$adj.P.Val, .Machine$double.xmin)
 deg$log_pval  <- -log10(deg$pval_plot)
@@ -36,10 +36,15 @@ top_kegg     <- deg |> dplyr::filter(regulation != "NS", in_kegg) |>
 
 label_set <- Reduce(union, list(top_fdr, top_lfc_up, top_lfc_down, top_kegg))
 
+# ── Hub genes from PPI network (cent must exist; pipeline now runs PPI first) ─
 if (exists("cent") && is.data.frame(cent)) {
   hubs <- cent |> dplyr::filter(is_hub) |> dplyr::pull(gene_symbol)
   label_set <- union(label_set, intersect(hubs, deg$gene_symbol))
 }
+
+# ── FALLBACK: force critical hub genes even if cent unavailable ───────────
+FORCE_LABEL <- c("PRKCA", "PLCG1", "PLCD4", "PRKCG", "PLCD3")
+label_set <- union(label_set, intersect(FORCE_LABEL, deg$gene_symbol))
 deg$label <- ifelse(deg$gene_symbol %in% label_set, deg$gene_symbol, "")
 
 cat(sprintf("  Labels: %d genes\n", length(label_set)))

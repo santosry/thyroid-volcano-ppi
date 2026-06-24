@@ -3,6 +3,8 @@
 # thyroid-volcano-ppi
 #
 # AUDIT: ✓ NA check  ✓ Duplicate check  ✓ Type coercion guard  ✓ Column validation
+# LIMITATION: TCGA vs GTEx comparison without batch effect correction.
+#             See AUDIT_REPORT.md §3 and docs/analysis_protocol.md §1.1
 # ═══════════════════════════════════════════════════════════════════════════════
 
 cat("\n── M1: Data Import & QC ──\n")
@@ -69,6 +71,11 @@ cat(sprintf("  Missing values: %.2f%%\n", na_frac * 100))
 
 # ── Expression scale QC ───────────────────────────────────────────────────────
 validate_expression_scale(expr)
+
+# ── Batch effect caveat ───────────────────────────────────────────────────────
+cat("  NOTE: TCGA vs GTEx comparison without batch correction.\n")
+cat("  Differential expression may partially reflect technical variation.\n")
+cat("  See AUDIT_REPORT.md and docs/analysis_protocol.md\n")
 
 cat("\n  Samples:\n")
 print(table(meta$condition))

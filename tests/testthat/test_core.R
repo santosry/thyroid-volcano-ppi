@@ -1,6 +1,6 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # tests/testthat/test_core.R — Core pipeline tests (no internet required)
-# thyroid-volcano-ppi v3.0.0
+# thyroid-volcano-ppi v3.1.0
 #
 # These tests use mock data and validate critical paths without external APIs.
 # ═══════════════════════════════════════════════════════════════════════════════

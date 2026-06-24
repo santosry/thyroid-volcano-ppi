@@ -99,12 +99,37 @@ cat("║  Output: Volcano Plot + PPI Network                  ║\n")
 cat("║  Standard: Nature Communications / Cell Press        ║\n")
 cat("╚══════════════════════════════════════════════════════╝\n\n")
 
-# ── Execute pipeline modules ─────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════════════════════
+# PIPELINE ORDER (v3.1.0 — AUDITED):
+#   1. Import + validate data
+#   2. Filter low expression
+#   3. PCA/UMAP QC (diagnostic, NOT DEG replacement)
+#   4. Outlier detection
+#   5. limma DEG (gene-by-gene, no dimensionality reduction)
+#   6. PPI network (STRING, centrality)
+#   7. Volcano plot (with hub labels from PPI)
+#   8. Supplementary tables
+#
+# IMPORTANT: PCA/UMAP are QC only. DEG is done gene-by-gene with limma.
+# ═══════════════════════════════════════════════════════════════════════════════
+
 source(here::here("R", "01_functions.R"), local = FALSE)
-source(here::here("R", "02_import.R"),    local = FALSE)
-source(here::here("R", "03_deg.R"),       local = FALSE)
-source(here::here("R", "04_volcano.R"),   local = FALSE)
-source(here::here("R", "05_ppi.R"),       local = FALSE)
+source(here::here("R", "02_import.R"),    local = FALSE)   # Step 1-2: Import
+
+# ── QC: PCA + UMAP + Outliers (BEFORE DEG — diagnostic only) ─────────────────
+for (qc_script in c("R/03b_pca.R", "R/03e_umap_qc.R", "R/03d_qc_outliers.R")) {
+  if (file.exists(here::here(qc_script))) {
+    tryCatch(
+      source(here::here(qc_script), local = FALSE),
+      error = function(e) cat("  QC skipped (", basename(qc_script), "):",
+                               conditionMessage(e), "\n")
+    )
+  }
+}
+
+source(here::here("R", "03_deg.R"),       local = FALSE)   # Step 5: limma DEG
+source(here::here("R", "05_ppi.R"),       local = FALSE)   # Step 6: PPI FIRST
+source(here::here("R", "04_volcano.R"),   local = FALSE)   # Step 7: Volcano AFTER PPI
 
 # ── Session info ─────────────────────────────────────────────────────────────
 sink(file.path(DIRS$logs, "session_info.txt"))
@@ -133,4 +158,9 @@ cat("transcriptomic associations. It does not establish causality,\n")
 cat("therapeutic targets, or clinical recommendations. PPI hub\n")
 cat("proteins are identified by centrality metrics (exploratory);\n")
 cat("they do not imply biological validation or druggability.\n")
+cat("\n")
+cat("Study type: Exploratory, hypothesis-generating.\n")
+cat("TCGA vs GTEx comparison without batch effect correction —\n")
+cat("differential expression may partially reflect technical variation.\n")
+cat("See AUDIT_REPORT.md for full scientific limitations.\n")
 cat("\n", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
