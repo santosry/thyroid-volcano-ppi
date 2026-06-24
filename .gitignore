@@ -23,6 +23,18 @@ renv/library/
 renv/staging/
 renv/sandbox/
 
+# ── Resumo expandido (não versionado) ────────────────────────────────────────
+resumo_expandido_tireoide_2026.docx
+
+# ── Scripts de auditoria de conversa (docx) — não publicar ──────────────────
+scripts/audit_docx_*.py
+scripts/linguistic_audit.py
+scripts/lock_docx_final.py
+
+# ── Tabelas de auditoria de conversa — não publicar ──────────────────────────
+results/tables/auditoria_artigo_vs_string.tsv
+results/tables/T_claims_audit_resumo_expandido.tsv
+
 # ── Temp files ───────────────────────────────────────────────────────────────
 *.pdf.tmp
 *.png.tmp

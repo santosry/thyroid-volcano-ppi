@@ -169,4 +169,4 @@ Key dependencies:
 | 2026-06-21 | v3.0.0 | Initial pipeline with volcano + PPI |
 | 2026-06-24 | v3.1.0 | Scientific audit: hypothesis reformulation, limitations documentation, PRKCA focus |
 
-Full audit report: `AUDIT_REPORT.md`
+Full audit trail: `results/tables/S3_pipeline_audit_trail.tsv`

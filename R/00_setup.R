@@ -127,7 +127,7 @@ cat(format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
 cat("═══════════════════════════════════════════\n")
 cat("NOTE: Exploratory study. No batch correction applied.\n")
 cat("      TCGA vs GTEx comparison requires cautious interpretation.\n")
-cat("      See AUDIT_REPORT.md for full limitations.\n\n")
+cat("      See README.md#limitações for full limitations.\n\n")
 
 # ── renv lockfile reminder ────────────────────────────────────────────────────
 if (requireNamespace("renv", quietly = TRUE)) {
