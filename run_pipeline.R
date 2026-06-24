@@ -102,21 +102,21 @@ cat("╚════════════════════════
 # ═══════════════════════════════════════════════════════════════════════════════
 # PIPELINE ORDER (v3.1.0 — AUDITED):
 #   1. Import + validate data
-#   2. Filter low expression
-#   3. PCA/UMAP QC (diagnostic, NOT DEG replacement)
+#   2. Filter low expression + limma DEG (gene-by-gene)
+#   3. PCA/UMAP QC on filtered expression matrix (diagnostic, NOT DEG replacement)
 #   4. Outlier detection
-#   5. limma DEG (gene-by-gene, no dimensionality reduction)
-#   6. PPI network (STRING, centrality)
-#   7. Volcano plot (with hub labels from PPI)
-#   8. Supplementary tables
+#   5. PPI network (STRING, centrality)
+#   6. Volcano plot (with hub labels from PPI)
+#   7. Supplementary tables
 #
 # IMPORTANT: PCA/UMAP are QC only. DEG is done gene-by-gene with limma.
 # ═══════════════════════════════════════════════════════════════════════════════
 
 source(here::here("R", "01_functions.R"), local = FALSE)
-source(here::here("R", "02_import.R"),    local = FALSE)   # Step 1-2: Import
+source(here::here("R", "02_import.R"),    local = FALSE)   # Step 1: Import
+source(here::here("R", "03_deg.R"),       local = FALSE)   # Step 2: Filter + DEG (creates E)
 
-# ── QC: PCA + UMAP + Outliers (BEFORE DEG — diagnostic only) ─────────────────
+# ── QC: PCA + UMAP + Outliers (on filtered E from 03_deg.R) ──────────────────
 for (qc_script in c("R/03b_pca.R", "R/03e_umap_qc.R", "R/03d_qc_outliers.R")) {
   if (file.exists(here::here(qc_script))) {
     tryCatch(
@@ -127,9 +127,8 @@ for (qc_script in c("R/03b_pca.R", "R/03e_umap_qc.R", "R/03d_qc_outliers.R")) {
   }
 }
 
-source(here::here("R", "03_deg.R"),       local = FALSE)   # Step 5: limma DEG
-source(here::here("R", "05_ppi.R"),       local = FALSE)   # Step 6: PPI FIRST
-source(here::here("R", "04_volcano.R"),   local = FALSE)   # Step 7: Volcano AFTER PPI
+source(here::here("R", "05_ppi.R"),       local = FALSE)   # Step 5: PPI FIRST
+source(here::here("R", "04_volcano.R"),   local = FALSE)   # Step 6: Volcano AFTER PPI
 
 # ── Session info ─────────────────────────────────────────────────────────────
 sink(file.path(DIRS$logs, "session_info.txt"))
