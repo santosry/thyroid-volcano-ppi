@@ -14,7 +14,7 @@ Análise Transcriptômica da Via de Sinalização do Hormônio Tireoidiano no Ca
 
 ## 2. Objetivo geral lockado
 
-Analisar a expressão diferencial dos genes da via de sinalização do hormônio tireoidiano no carcinoma de tireoide, identificando alterações transcriptômicas e padrões de interação proteína-proteína capazes de gerar hipóteses biológicas sobre mecanismos moleculares envolvidos na doença e discutir sua relevância para a enfermagem de precisão.
+Analisar a expressão diferencial dos genes da via de sinalização do hormônio tireoidiano no carcinoma de tireoide, identificando alterações transcriptômicas e padrões de interação proteína-proteína capazes de gerar hipóteses biológicas sobre processos moleculares potencialmente associados à biologia tumoral e discutir sua relevância para a enfermagem de precisão.
 
 ---
 
@@ -119,11 +119,19 @@ Este projeto foi lockado como estudo exploratório de transcriptômica aplicada 
 
 ## Critério de sucesso
 
-Ao final, o projeto responde apenas a esta pergunta:
+### Pergunta central lockada
 
-**Quais alterações transcriptômicas em genes da via de sinalização do hormônio tireoidiano são observadas no carcinoma de tireoide, como esses genes se organizam em uma rede PPI e de que modo esses achados podem gerar hipóteses relevantes para a enfermagem de precisão?**
+Quais alterações transcriptômicas em genes da via de sinalização do hormônio tireoidiano são observadas no carcinoma de tireoide, como esses genes se organizam em uma rede de interação proteína-proteína e de que modo esses achados podem gerar hipóteses biológicas relevantes para futuras investigações em enfermagem de precisão?
 
-Nenhum trecho do projeto responde a pergunta cardiovascular causal, sistêmica ou clínica.
+### Resposta científica lockada
+
+O projeto responde a essa pergunta ao demonstrar, por meio de análise de expressão diferencial com limma, que 29 genes da via de sinalização do hormônio tireoidiano apresentam expressão diferencial significativa no carcinoma de tireoide em comparação ao tecido tireoidiano normal, sendo 9 superexpressos e 20 subexpressos no tumor.
+
+Em seguida, esses genes foram submetidos à análise de interação proteína-proteína pelo STRING, permitindo identificar um subconjunto de genes organizados em uma rede conectada, com módulos relacionados principalmente à sinalização intracelular e à organização estrutural celular.
+
+Entre os genes da rede, PRKCA emergiu como nó de alta centralidade, apresentando maior conectividade e posição intermediária entre módulos, o que sugere potencial relevância biológica dentro da rede analisada. Esse achado, entretanto, deve ser interpretado como exploratório e não como evidência de causalidade, biomarcador validado ou alvo terapêutico.
+
+Assim, o estudo gera hipóteses biológicas sobre alterações transcriptômicas da via de sinalização do hormônio tireoidiano no carcinoma de tireoide. No campo da enfermagem de precisão, esses achados podem contribuir futuramente para a incorporação de informações moleculares na pesquisa, no ensino e na construção de estratégias de cuidado oncológico mais individualizadas, desde que validados por estudos clínicos, funcionais e translacionais adicionais.
 
 ---
 
