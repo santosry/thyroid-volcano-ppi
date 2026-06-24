@@ -15,6 +15,8 @@
 
 Estudo exploratório de bioinformática aplicada à oncologia tireoidiana. Foram analisados dados públicos de RNA-seq do TCGA e GTEx (783 amostras: 504 de carcinoma papilífero de tireoide, 279 de tecido tireoidiano normal) com foco na via de sinalização do hormônio tireoidiano (KEGG hsa04919, 119 genes).
 
+> **Nota sobre a contagem de genes da via KEGG:** O website do KEGG exibe 78 genes no diagrama da via hsa04919 (genes manualmente curados com posição na ilustração). A função `keggGet("hsa04919")` do pacote KEGGREST, utilizada neste estudo, retorna 121 genes — incluindo todos os parálogos humanos e membros de famílias gênicas que compartilham KEGG Orthology (KO) com os genes do diagrama. Por exemplo, se o diagrama utiliza "PRKC", a API retorna PRKCA, PRKCB, PRKCG e demais membros da família. Dos 121 genes retornados, 119 intersectam com a matriz de expressão TCGA-GTEx (2 são excluídos pelo filtro de baixa expressão). Esta abordagem é conservadora e padrão em estudos transcriptômicos baseados em vias KEGG, pois evita a perda de genes funcionalmente relacionados.
+
 ### Hipótese científica
 
 O carcinoma de tireoide apresenta alterações transcriptômicas em genes da via de sinalização do hormônio tireoidiano. A identificação desses genes e de suas interações proteicas pode gerar hipóteses biológicas relevantes para futuras investigações em oncologia molecular e enfermagem de precisão.

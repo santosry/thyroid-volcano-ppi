@@ -127,6 +127,21 @@ TCGA THCA + GTEx Thyroid gene expression RNA-seq (TOIL recompute pipeline)
 **Pathway**: hsa04919 — Thyroid hormone signaling pathway  
 **Source**: KEGG REST API via `KEGGREST` package
 
+### Nota sobre a contagem de genes
+
+O website do KEGG (https://www.kegg.jp/entry/hsa04919) exibe **78 genes** no diagrama da via — são os genes manualmente curados com posição explícita na ilustração. A função `keggGet("hsa04919")` do pacote KEGGREST retorna **121 genes**, porque a API inclui todos os genes humanos que compartilham KEGG Orthology (KO) com os genes do diagrama. Isso significa que parálogos e membros de famílias gênicas são incluídos mesmo que não apareçam individualmente no desenho da via.
+
+**Exemplo:** O diagrama utiliza "PRKC" (proteína quinase C). A API retorna todos os membros humanos dessa família: PRKCA, PRKCB, PRKCG, PRKCD, PRKCE, PRKCH, PRKCQ, PRKCI, PRKCZ. O mesmo ocorre com outras famílias como PLC (fosfolipase C), ATP1A (ATPase), NOTCH, MED (mediador), etc.
+
+Dos 121 genes retornados pela API, **119 intersectam** com a matriz de expressão TCGA-GTEx após o pré-processamento (2 são excluídos pelo filtro de baixa expressão: expressão média > 0,5 em ≥ 10% das amostras).
+
+Esta abordagem é **conservadora e recomendada** em estudos transcriptômicos baseados em vias KEGG, pois:
+- Evita a perda de genes funcionalmente relacionados que participam da via mas não foram desenhados no diagrama por limitações de espaço
+- Garante cobertura completa da via no contexto de uma análise exploratória
+- A documentação explícita da discrepância permite que o leitor compreenda a origem e a magnitude da diferença
+
+### Uso dos genes KEGG neste estudo
+
 KEGG pathway genes are used for:
 1. Volcano plot highlight (open rings on DEGs in pathway)
 2. PPI network label priority
