@@ -255,7 +255,6 @@ Este projeto utilizou ferramentas de inteligência artificial como suporte técn
 
 | Ferramenta | Desenvolvedor | Etapa |
 |------------|---------------|-------|
-| Claude (Anthropic) | Anthropic | Auditoria científica completa, revisão metodológica, correções de código, revisão linguística, elaboração de relatórios de auditoria, documentação |
 | DeepSeek-v4-pro | DeepSeek AI | Otimização de código R, auditoria de namespaces, revisão de funções estatísticas |
 | Codex | OpenAI | Geração e depuração de scripts R, documentação técnica |
 | ChatGPT 5.5 | OpenAI | Revisão textual, estruturação de documentação |
